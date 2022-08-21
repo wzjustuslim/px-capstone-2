@@ -1,46 +1,26 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import ResponsiveAppBar from './pages/AppBar';
-
+import PromoCarousel from './pages/PromoCarousel';
+import MarketPlace from './pages/MarketPlace';
 import './App.css';
 
 function App() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   return (
     <div>
-      <ResponsiveAppBar></ResponsiveAppBar>
-      <Button
-        id="basic-button"
-        aria-controls={open ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
-      >
-        Dashboard
-      </Button>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
-      </Menu>
+      <div>
+      <ResponsiveAppBar />
+      </div>
+      <div style={{margin:10}}>
+      <div class="container" >
+      <PromoCarousel />
+      </div>
+      </div>
+      <div style={{margin:10}}>
+      <div class="container" >
+        <MarketPlace />
+      </div>
+      </div>
     </div>
   );
 }

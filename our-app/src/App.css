@@ -13,6 +13,17 @@
   }
 }
 
+.googleBlue{
+  background-color: #1976d2;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
