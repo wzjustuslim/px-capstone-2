@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+.hero-img {
+  background-image: url(static/images/hero-image.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 60vh
+}
