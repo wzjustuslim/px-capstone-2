@@ -60,20 +60,19 @@ const LandingPage = () => {
                 <Box sx={{
                   display: "flex"
                 }}>
-                  {/* refactor */}
-                  <RouterLink to="/explore">
-                    <Button
-                      variant="contained"
-                      size="large"
-                      sx={{ 
-                        px: 6,
-                        py: 2,
-                        borderRadius: 3,
-                      }}
-                    >
-                      Explore
-                    </Button>
-                  </RouterLink>
+                  <Button
+                    component={RouterLink}
+                    to="/explore"
+                    variant="contained"
+                    size="large"
+                    sx={{ 
+                      px: 6,
+                      py: 2,
+                      borderRadius: 3,
+                    }}
+                  >
+                    Explore
+                  </Button>
                 </Box>
               </Box>
             </Grid>
