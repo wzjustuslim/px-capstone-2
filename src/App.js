@@ -7,6 +7,7 @@ import TemporaryDrawer from './components/TemporaryDrawer.js';
 import AuthFormDialog from './components/AuthFormDialog.js';
 import LandingPage from './pages/LandingPage.js';
 import ProfilePage from './pages/ProfilePage.js';
+import ExplorePage from './pages/ExplorePage.js';
 
 function App() {
   // cart drawer state
@@ -42,6 +43,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/explore" element={<ExplorePage />} />
       </Routes>
       
       

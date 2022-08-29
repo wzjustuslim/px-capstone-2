@@ -178,8 +178,8 @@ const ResponsiveAppBar = ({ isUser, toggleDrawer, handleClickOpen, setAuthType }
             >
               {isUser 
                 ? userSettings.map((setting) => (
-                    <Link color="text.primary" underline="none" component={RouterLink} to={`/${setting.toLowerCase().replaceAll(' ', '-')}`}>
-                      <MenuItem key={setting} onClick={() => {handleCloseUserMenu(setting)}}>
+                    <Link key={setting} color="text.primary" underline="none" component={RouterLink} to={`/${setting.toLowerCase().replaceAll(' ', '-')}`}>
+                      <MenuItem onClick={() => {handleCloseUserMenu(setting)}}>
                         <Typography textAlign="center">{setting}</Typography>
                       </MenuItem>
                     </Link>

@@ -69,7 +69,7 @@ const Footer = () => {
                 <List>
                   {
                     ['All Items', 'Art', 'Collectibles', 'Domain Names', 'Music', 'Photography', 'Sports', 'Trading Cards', 'Utility', 'Virtual Worlds'].map((value) => (
-                      <ListItem>
+                      <ListItem key={value}>
                         <Link 
                           variant="subtitle2" 
                           color="white" 
@@ -107,7 +107,7 @@ const Footer = () => {
                 <List>
                   {
                     ['Profile', 'Favorites', 'Watchlist', 'My Collections', 'Settings'].map((value) => (
-                      <ListItem>
+                      <ListItem key={value}>
                         <Link 
                           variant="subtitle2" 
                           color="white" 
@@ -143,7 +143,7 @@ const Footer = () => {
                 <List>
                   {
                     ['Rankings', 'Activity'].map((value) => (
-                      <ListItem>
+                      <ListItem key={value}>
                         <Link 
                           variant="subtitle2" 
                           color="white" 
@@ -181,7 +181,7 @@ const Footer = () => {
                 <List>
                   {
                     ['Help Center', 'Platform Status', 'Partners', 'Taxes', 'Blog', 'Docs', 'Newsletter'].map((value) => (
-                      <ListItem>
+                      <ListItem key={value}>
                         <Link 
                           variant="subtitle2" 
                           color="white" 
@@ -219,7 +219,7 @@ const Footer = () => {
                 <List>
                   {
                     ['About', 'Careers', 'Ventures', 'Grants'].map((value) => (
-                      <ListItem>
+                      <ListItem key={value}>
                         <Link 
                           variant="subtitle2" 
                           color="white" 

@@ -11,6 +11,7 @@ import LocalMallIcon from '@mui/icons-material/LocalMall';
 import RedeemIcon from '@mui/icons-material/Redeem';
 import CategoryCard from '../components/CategoryCard.js';
 import Footer from '../components/Footer.js';
+import { Link as RouterLink } from "react-router-dom";
 
 const LandingPage = () => {
   // placeholder array
@@ -59,17 +60,20 @@ const LandingPage = () => {
                 <Box sx={{
                   display: "flex"
                 }}>
-                  <Button
-                    variant="contained"
-                    size="large"
-                    sx={{ 
-                      px: 6,
-                      py: 2,
-                      borderRadius: 3
-                    }}
-                  >
-                    Explore
-                  </Button>
+                  {/* refactor */}
+                  <RouterLink to="/explore">
+                    <Button
+                      variant="contained"
+                      size="large"
+                      sx={{ 
+                        px: 6,
+                        py: 2,
+                        borderRadius: 3,
+                      }}
+                    >
+                      Explore
+                    </Button>
+                  </RouterLink>
                 </Box>
               </Box>
             </Grid>

@@ -109,7 +109,7 @@ export default function AuthFormDialog({ open, authType, setAuthType, handleClos
                 <TextField
                   name="password"
                   label="Password"
-                  margin="normal  "
+                  margin="normal"
                   type="password"
                   fullWidth
                   variant="outlined"
