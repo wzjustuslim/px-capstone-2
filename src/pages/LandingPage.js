@@ -184,7 +184,7 @@ const LandingPage = () => {
           </Box>
         </section>
         <section>
-          <Container maxWidth="lg">
+          <Container maxWidth="lg" sx={{ pb: 8 }}>
             <Grid container spacing={4}>
               <Grid xs={12}>
                 <Box sx={{
