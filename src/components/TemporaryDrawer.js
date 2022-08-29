@@ -8,9 +8,12 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import CategoryIcon from '@mui/icons-material/Category';
 
+const menuList = ['E-Wallet', 'Account', 'Cart', 'Categories'];
 export default function TemporaryDrawer({drawerState, toggleDrawer}) {
 
   const list = (anchor) => (
@@ -21,11 +24,20 @@ export default function TemporaryDrawer({drawerState, toggleDrawer}) {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+        {menuList.map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {index === 0 ? <AccountBalanceWalletIcon /> 
+                : 
+                index === 1 ? <AccountCircleIcon /> 
+                :
+                index === 2 ? <ShoppingCartIcon />
+                :
+                index === 3 ? <CategoryIcon />
+                :
+                <></>
+                }
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
@@ -33,18 +45,6 @@ export default function TemporaryDrawer({drawerState, toggleDrawer}) {
         ))}
       </List>
       <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
     </Box>
   );
 
