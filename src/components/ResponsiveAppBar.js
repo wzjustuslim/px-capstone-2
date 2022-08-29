@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link as RouterLink } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,6 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import CatchingPokemonIcon from '@mui/icons-material/CatchingPokemon';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import Link from '@mui/material/Link';
 
 const pages = ['Stats'];
 const guestSettings = ['Log in', 'Sign up'];
@@ -59,26 +61,28 @@ const ResponsiveAppBar = ({ isUser, toggleDrawer, handleClickOpen, setAuthType }
     <AppBar position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <CatchingPokemonIcon fontSize="large" sx={{ display: { xs: 'none', md: 'flex' }, mr: 2 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'sans-serif',
-              fontWeight: 700,
-              letterSpacing: '0.1rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            POKEMART
-          </Typography>
+          <Link color="inherit" component={RouterLink} to="/">
+            <CatchingPokemonIcon fontSize="large" sx={{ display: { xs: 'none', md: 'flex' }, mr: 2 }} />
+          </Link>
+          <Link underline="none" color="inherit" component={RouterLink} to="/">
+            <Typography
+              variant="h6"
+              noWrap
+              sx={{
+                mr: 2,
+                display: { xs: 'none', md: 'flex' },
+                fontFamily: 'sans-serif',
+                fontWeight: 700,
+                letterSpacing: '0.1rem',
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
+              POKEMART
+            </Typography>
+          </Link>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 0, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -114,25 +118,30 @@ const ResponsiveAppBar = ({ isUser, toggleDrawer, handleClickOpen, setAuthType }
               ))}
             </Menu>
           </Box>
-          <CatchingPokemonIcon fontSize="large" sx={{ display: { xs: 'flex', md: 'none' }, mr: 2 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'sans-serif',
-              fontWeight: 700,
-              letterSpacing: '.1rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            POKEMART
-          </Typography>
+          <Box sx={{ justifyContent: "center", flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <Link color="inherit" component={RouterLink} to="/">
+              <CatchingPokemonIcon fontSize="large" sx={{ display: { xs: 'flex', md: 'none' }, mr: 2 }} />
+            </Link>
+            <Link underline="none" color="inherit" component={RouterLink} to="/">
+              <Typography
+                variant="h6"
+                noWrap
+                sx={{
+                  mr: 2,
+                  display: { xs: 'flex', md: 'none' },
+                  alignSelf: "center",
+                  flexGrow: 1,
+                  fontFamily: 'sans-serif',
+                  fontWeight: 700,
+                  letterSpacing: '.1rem',
+                  color: 'inherit',
+                  textDecoration: 'none',
+                }}
+              >
+                POKEMART
+              </Typography>
+            </Link>
+          </Box>
           <Box sx={{ flexDirection: 'row-reverse', flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
@@ -169,9 +178,11 @@ const ResponsiveAppBar = ({ isUser, toggleDrawer, handleClickOpen, setAuthType }
             >
               {isUser 
                 ? userSettings.map((setting) => (
-                    <MenuItem key={setting} onClick={() => {handleCloseUserMenu(setting)}}>
-                      <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
+                    <Link color="text.primary" underline="none" component={RouterLink} to={`/${setting.toLowerCase().replaceAll(' ', '-')}`}>
+                      <MenuItem key={setting} onClick={() => {handleCloseUserMenu(setting)}}>
+                        <Typography textAlign="center">{setting}</Typography>
+                      </MenuItem>
+                    </Link>
                   ))
                 : guestSettings.map((setting) => (
                     <MenuItem key={setting} onClick={() => {handleCloseUserMenu(setting)}}>

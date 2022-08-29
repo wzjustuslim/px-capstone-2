@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import * as React from 'react';
+import { Routes, Route } from "react-router-dom";
 import ResponsiveAppBar from './components/ResponsiveAppBar.js';
 import TemporaryDrawer from './components/TemporaryDrawer.js';
 import AuthFormDialog from './components/AuthFormDialog.js';
@@ -38,8 +39,12 @@ function App() {
       <ResponsiveAppBar isUser={isUser} toggleDrawer={toggleDrawer} handleClickOpen={handleClickOpen} setAuthType={setAuthType} />
       <TemporaryDrawer drawerState={drawerState} toggleDrawer={toggleDrawer} />
       <AuthFormDialog open={open} authType={authType} setAuthType={setAuthType} handleClose={handleClose} />
-      {/* <LandingPage /> */}
-      <ProfilePage />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+      </Routes>
+      
+      
     </div>
   );
 }
