@@ -15,7 +15,7 @@ import Footer from '../components/Footer.js';
 const LandingPage = () => {
   // placeholder array
   const cardArr = [];
-  for (let i = 0; i < 51; i++) {
+  for (let i = 0; i < 12; i++) {
     cardArr.push(i);
   }
 

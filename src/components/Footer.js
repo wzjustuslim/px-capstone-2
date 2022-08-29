@@ -10,7 +10,6 @@ import CatchingPokemonIcon from '@mui/icons-material/CatchingPokemon';
 import Divider from '@mui/material/Divider';
 
 const Footer = () => {
-  console.log('foot')
 
   return (
     <footer>

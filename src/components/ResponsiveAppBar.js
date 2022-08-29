@@ -16,9 +16,10 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 
 const pages = ['Stats'];
-const settings = ['Log in', 'Sign up', 'Profile', 'My Items', 'Wallet', 'Log out'];
+const guestSettings = ['Log in', 'Sign up'];
+const userSettings = ['Profile', 'My Items', 'Wallet', 'Log out']
 
-const ResponsiveAppBar = ({toggleDrawer}) => {
+const ResponsiveAppBar = ({ isUser, toggleDrawer, handleClickOpen, setAuthType }) => {
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -26,6 +27,7 @@ const ResponsiveAppBar = ({toggleDrawer}) => {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -34,7 +36,18 @@ const ResponsiveAppBar = ({toggleDrawer}) => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (setting) => {
+    console.log('im running', setting)
+    switch (setting) {
+      case 'Log in':
+        setAuthType('login')
+        handleClickOpen()
+        break;
+      case 'Sign up':
+        setAuthType('signup')
+        handleClickOpen()
+        break;
+    }
     setAnchorElUser(null);
   };
 
@@ -150,11 +163,18 @@ const ResponsiveAppBar = ({toggleDrawer}) => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              {isUser 
+                ? userSettings.map((setting) => (
+                    <MenuItem key={setting} onClick={() => {handleCloseUserMenu(setting)}}>
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  ))
+                : guestSettings.map((setting) => (
+                    <MenuItem key={setting} onClick={() => {handleCloseUserMenu(setting)}}>
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  ))
+              }
             </Menu>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
