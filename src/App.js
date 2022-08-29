@@ -5,6 +5,7 @@ import ResponsiveAppBar from './components/ResponsiveAppBar.js';
 import TemporaryDrawer from './components/TemporaryDrawer.js';
 import AuthFormDialog from './components/AuthFormDialog.js';
 import LandingPage from './pages/LandingPage.js';
+import ProfilePage from './pages/ProfilePage.js';
 
 function App() {
   // cart drawer state
@@ -37,7 +38,8 @@ function App() {
       <ResponsiveAppBar isUser={isUser} toggleDrawer={toggleDrawer} handleClickOpen={handleClickOpen} setAuthType={setAuthType} />
       <TemporaryDrawer drawerState={drawerState} toggleDrawer={toggleDrawer} />
       <AuthFormDialog open={open} authType={authType} setAuthType={setAuthType} handleClose={handleClose} />
-      <LandingPage />
+      {/* <LandingPage /> */}
+      <ProfilePage />
     </div>
   );
 }
