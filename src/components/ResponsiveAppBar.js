@@ -47,10 +47,10 @@ const ResponsiveAppBar = ({ isUser, toggleDrawer, handleClickOpen, setAuthType }
         setAuthType('signup')
         handleClickOpen()
         break;
-      default:
-        setAuthType('signup')
-        handleClickOpen()
-        break;
+      // default:
+      //   setAuthType('signup')
+      //   handleClickOpen()
+      //   break;
     }
     setAnchorElUser(null);
   };
