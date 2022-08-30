@@ -1,11 +1,12 @@
-import * as React from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { Typography } from '@mui/material';
-
+import FetchData from './Api'
 
 export default function MarketPlace() {
-
+    
+    
     const sampleArray = [
         {
             itemID: "10001",
@@ -42,7 +43,7 @@ export default function MarketPlace() {
         {
             itemID: "10005",
             itemName: "Berry",
-            itemDemo: "All Natural no preservertives, I am making this message extra long to test the layout",
+            itemDemo: "All Natural no preservatives, I am making this message extra long to test the layout",
             itemTags: ["berry", "consumables"],
             itemPrice: 5,
             itemImage: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/cheri-berry.png"
@@ -75,10 +76,11 @@ export default function MarketPlace() {
                                 src={item.itemImage}
                                 alt={item.itemName}
                                 class="center"
+                                margin="1"
                             />
-                            <Typography variant="h5" textAlign="center" noWrap>{item.itemName} </Typography>
-                            <Typography textAlign="center" noWrap>{item.itemDemo} </Typography>
-                            <Typography textAlign="center" noWrap>${item.itemPrice}</Typography>
+                            <Typography sx={{ fontWeight: 'bold' }} m={1} variant="h6" textAlign="center" noWrap>{item.itemName} </Typography>
+                            <Typography m={1} variant="subtitle2" textAlign="center" noWrap>{item.itemDemo} </Typography>
+                            <Typography color="darkorange" m={1} textAlign="center" noWrap>${item.itemPrice}</Typography>
                         </Box>
                     </Grid>
                 ))}

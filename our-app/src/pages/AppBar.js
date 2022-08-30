@@ -12,6 +12,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import logo from '../Poke_Mart_Avatar.png'
 import SearchIcon from '@mui/icons-material/Search';
+import Badge from '@mui/material/Badge';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import ShoppingCartSharpIcon from '@mui/icons-material/ShoppingCartSharp';
@@ -168,9 +169,13 @@ const ResponsiveAppBar = () => {
                     </Box>
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Shopping Cart">
-                            <IconButton onClick={handleOpenCart} sx={{ p: 2 }}>
+                        
+                            <IconButton onClick={handleOpenCart}>
+                            <Badge badgeContent={1} color="error">
                                 <ShoppingCartSharpIcon fontSize="large"/>
+                                </Badge>
                             </IconButton>
+                            
                         </Tooltip>
                     </Box>
                     <Box sx={{ flexGrow: 0 }}>

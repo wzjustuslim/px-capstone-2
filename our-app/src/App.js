@@ -6,18 +6,20 @@ import './App.css';
 
 function App() {
 
+
+
   return (
     <div>
       <div>
       <ResponsiveAppBar />
       </div>
       <div style={{margin:10}}>
-      <div class="container" >
+      <div className="container" >
       <PromoCarousel />
       </div>
       </div>
       <div style={{margin:10}}>
-      <div class="container" >
+      <div className="container" >
         <MarketPlace />
       </div>
       </div>
