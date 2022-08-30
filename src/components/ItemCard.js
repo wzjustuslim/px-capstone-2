@@ -5,8 +5,8 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
-// import Img from '../static/images/pokeball-card.jpg';
-
+import Img from "../static/images/pokeball-card.jpg";
+import "./ItemCard.css";
 export default function ItemCard({
   id,
   itemName,
@@ -21,16 +21,16 @@ export default function ItemCard({
         <CardMedia
           className='item-img'
           component='img'
-          height='140'
+          height='100'
           src={itemImg}
         />
         <CardContent>
-          <Typography variant='h6'>{itemName}</Typography>
-          <Typography variant='caption'>
-            {itemDesc}
+          <Typography variant='h4'>{itemName}</Typography>
+          <Typography variant='caption'>{itemDesc}</Typography>
+          <Typography variant='h5'>
             <CurrencyBitcoinIcon />
+            {itemPrice}
           </Typography>
-          <Typography variant='h5'>{itemPrice}</Typography>
           <Typography variant='h6'>{itemCategory}</Typography>
         </CardContent>
       </CardActionArea>

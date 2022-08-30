@@ -11,27 +11,49 @@ import Typography from "@mui/material/Typography";
 import ItemCard from "../components/ItemCard";
 import CategoryTagsPageItemSection from "../components/CategoryTagsPageItemSection";
 
-import '../components/spinner.css';
+import "../components/spinner.css";
 
-const splashImageUrl = "/static/images/hero-image.jpg";
-// const mockData = [
-//   {
-//     itemTags:['special-balls'],
-//     _id:'123123123',
-//     itemName:"Luxury Ball",
-//     itemDemo:"A cozy ball",
-//     itemPrice:3000,
-//     itemImage:'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/luxury-ball.png'
-//   },
-//   {
-//     itemTags:['healing'],
-//     _id:'12312323s123',
-//     itemName:"Potion",
-//     itemDemo:"Restore by 20 hp",
-//     itemPrice:200,
-//     itemImage:'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/potion.png'
-//   },
-// ]
+const splashImageUrl = `../static/images/hero-image.jpg`;
+const mockData = [
+  {
+    itemTags: ["special-balls"],
+    _id: "123123123",
+    itemName: "Luxury Ball",
+    itemDemo: "A cozy ball",
+    itemPrice: 3000,
+    itemImage:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/luxury-ball.png",
+  },
+  {
+    itemTags: ["healing"],
+    _id: "12312323s123",
+    itemName: "Super Potion",
+    itemDemo: "Restore by 40 hp",
+    itemPrice: 300,
+    itemImage:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/potion.png",
+  },
+  
+  {
+    itemTags: ["healing"],
+    _id: "123a23s123",
+    itemName: "Potion",
+    itemDemo: "Restore by 20 hp",
+    itemPrice: 200,
+    itemImage:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/potion.png",
+  },
+  
+  {
+    itemTags: ["healing"],
+    _id: "12d12223s123",
+    itemName: "Ultra Potion",
+    itemDemo: "Restore by 60 hp",
+    itemPrice: 400,
+    itemImage:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/potion.png",
+  },
+];
 
 export default function CategoryTagsPage() {
   const params = useParams();
@@ -44,38 +66,41 @@ export default function CategoryTagsPage() {
   useEffect(() => {
     const getAllItemsFromDB = async () => {
       setLoading(true);
-      try {
-        const url = "https://pokemartdb-backend.herokuapp.com/api/items";
-        const res = await axios.get(url);
-        // const res = await axios.get('https://pokeapi.co/api/v2/item-category/loot')
-        const transformedItems = res.data.map((pokeItems) => {
-          return {
-            id: pokeItems._id,
-            itemCategory: pokeItems.itemTags[0],
-            itemName: pokeItems.itemName,
-            itemDesc: pokeItems.itemDesc,
-            itemPrice: pokeItems.itemPrice,
-            itemImage: pokeItems.itemImage,
-          };
-        });
-        setAllPokeItems(transformedItems);
-      } catch (error) {
-        console.error(error.message);
-      } 
+      if (false) {
+        try {
+          const url = "https://pokemartdb-backend.herokuapp.com/api/items";
+          const res = await axios.get(url);
+          // const res = await axios.get('https://pokeapi.co/api/v2/item-category/loot')
+          if (res.data.success) {
+            const transformedItems = res.data.data.map((pokeItems) => {
+              return {
+                id: pokeItems._id,
+                itemCategory: pokeItems.itemTags[0],
+                itemName: pokeItems.itemName,
+                itemDesc: pokeItems.itemDesc,
+                itemPrice: pokeItems.itemPrice,
+                itemImage: pokeItems.itemImage,
+              };
+            });
+            setAllPokeItems(transformedItems);
+          }
+        } catch (error) {
+          console.error(error.message);
+        }
+      }
       // comment this after check is done
-      // finally {
-      //   const transformedItems = mockData.map((pokeItems) => {
-      //     return {
-      //       id: pokeItems._id,
-      //       itemCategory: pokeItems.itemTags[0],
-      //       itemName: pokeItems.itemName,
-      //       itemDesc: pokeItems.itemDesc,
-      //       itemPrice: pokeItems.itemPrice,
-      //       itemImage: pokeItems.itemImage,
-      //     };
-      //   });
-      //   setAllPokeItems(transformedItems);
-      // }
+      const transformedItems = mockData.map((pokeItems) => {
+        return {
+          id: pokeItems._id,
+          itemCategory: pokeItems.itemTags[0],
+          itemName: pokeItems.itemName,
+          itemDesc: pokeItems.itemDemo,
+          itemPrice: pokeItems.itemPrice,
+          itemImage: pokeItems.itemImage,
+        };
+      });
+      console.log(transformedItems);
+      setAllPokeItems(transformedItems);
       setLoading(false);
       //   console.log(res.data);
     };
@@ -93,49 +118,58 @@ export default function CategoryTagsPage() {
 
   return (
     <>
-      <CssBaseline />
-      <Container maxWidth='lg'>
-        <Box
-          component='div'
-          sx={{
-            bgcolor: "#cfe8fc",
-            height: "10vh",
-          }}>
+      <main>
+        <section>
           <Box
             component='div'
             sx={{
               bgcolor: "#cfe2fc",
-              height: "50vh",
+              height: "15rem",
               display: "flex",
               alignItems: "flex-end",
             }}></Box>
-          <Box
+            <Box
+              component='div'
+              sx={{
+                px:2,
+                height: "0rem",
+              }}>
+              <Avatar
+                alt={category}
+                src={splashImageUrl}
+                sx={{ width: '10rem', height: '10rem' }}
+              />
+            </Box><Box
             component='div'
             sx={{
-              height: "10vh",
-            }}>
-            <Avatar
-              alt={category}
-              src={splashImageUrl}
-              sx={{ width: 56, height: 56 }}
-            />
-          </Box>
-
-          <Typography
-            component='h1'
-            variant='h3'
-            align='left'
-            gutterBottom
-            sx={{
-              fontWeight: 900,
-            }}>
-            <br />
-            {category}
-          </Typography>
-        </Box>
-      </Container>
-      {!loading && <CategoryTagsPageItemSection items={categoryItems} />}
-      {loading && <div className="loading-spinner"></div>}
+              bgcolor: "#cfe2fc",
+              height: "15rem",
+              display: "flex",
+              alignItems: "flex-end",
+            }}><Typography
+              component='h1'
+              variant='h3'
+              align='left'
+              gutterBottom
+              sx={{
+                px:2,
+                fontWeight: 900,
+              }}>
+              <br />
+              {category}
+            </Typography></Box>
+            
+            <Box
+              component='div'
+              sx={{
+                height: "100%",
+              }}></Box>
+        </section>
+        <section>
+          {!loading && <CategoryTagsPageItemSection items={categoryItems} />}
+          {loading && <div className='loading-spinner'></div>}
+        </section>
+      </main>
     </>
   );
 }
