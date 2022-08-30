@@ -57,7 +57,7 @@ export default function CategoryTagsPage() {
       : setCategoryItems(
           allPokeItems.filter((items) => items.itemCategory === category)
         );
-  }, [allPokeItems, category]);
+  }, [loading, allPokeItems, category]);
 
   return (
     <>
@@ -102,7 +102,7 @@ export default function CategoryTagsPage() {
           </Typography>
         </Box>
       </Container>
-      {!loading && <CategoryTagsPageItemSection items={allPokeItems} />}
+      {!loading && <CategoryTagsPageItemSection items={categoryItems} />}
       {loading && <div className="loading-spinner"></div>}
     </>
   );
