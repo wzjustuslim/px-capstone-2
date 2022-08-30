@@ -8,6 +8,9 @@ import AuthFormDialog from './components/AuthFormDialog.js';
 import LandingPage from './pages/LandingPage.js';
 import ProfilePage from './pages/ProfilePage.js';
 import ExplorePage from './pages/ExplorePage.js';
+// import CategorySideDrawerPage from './pages/CategoryPage.js';
+import CategoryTagsPage from './pages/CategoryTagsPage.js';
+
 
 function App() {
   //#region Declare UI elements
@@ -46,6 +49,8 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/explore" element={<ExplorePage />} />
+        {/* <Route path="/categories/:category" exact element={<CategorySideDrawerPage />} /> */}
+        <Route path="/categories/:category" exact element={<CategoryTagsPage />} />
       </Routes>
       
       

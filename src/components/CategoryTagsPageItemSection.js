@@ -4,9 +4,9 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 import CategoryCard from "../components/CategoryCard.js";
-import CategoryImg from "../static/images/pokeball-card.jpg";
+import ItemCard from "./ItemCard.js";
 
-const CategorySection = ({ categories }) => {
+const CategoryTagsPageItemSection = ({ items }) => {
   return (
     <Container maxWidth='lg' sx={{ pb: 8 }}>
       <Grid container spacing={4}>
@@ -17,20 +17,24 @@ const CategorySection = ({ categories }) => {
               justifyContent: "center",
               py: 6,
             }}>
-            <Typography
+            {/* <Typography
               variant='h5'
               sx={{
                 fontWeight: 700,
               }}>
               Browse by category
-            </Typography>
+            </Typography> */}
           </Box>
         </Grid>
-        {categories.map((category) => (
-          <Grid key={category} xs={12} sm={6} lg={4}>
-            <CategoryCard
-              categoryName={category.name}
-              categoryImg={CategoryImg}
+        {items.map((item) => (
+          <Grid key={item.id} xs={12} sm={6} lg={4}>
+            <ItemCard
+              id={item.id}
+              itemCategory={item.itemCategory}
+              itemName={item.itemName}
+              itemDesc={item.itemDesc}
+              itemPrice={item.itemPrice}
+              itemImage={item.itemImage}
             />
           </Grid>
         ))}
@@ -38,4 +42,5 @@ const CategorySection = ({ categories }) => {
     </Container>
   );
 };
-export default CategorySection;
+
+export default CategoryTagsPageItemSection;

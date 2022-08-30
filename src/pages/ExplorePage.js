@@ -22,10 +22,9 @@ const ExplorePage = () => {
     <>
       <main>
         <br /><br /><br /><br />
-        {pokemartItems.map((item) =>{
-          <ItemCard />
-          
-        })}
+        {/* {pokemartItems.map((item) =>{
+          <ItemCard items={item}/>
+        })} */}
       </main>
     </>
   )
