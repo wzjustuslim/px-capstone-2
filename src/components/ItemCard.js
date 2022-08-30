@@ -4,16 +4,17 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
+// import Img from '../static/images/pokeball-card.jpg';
 
-export default function CategoryCard({categoryName, categoryImg}) {
+export default function ItemCard({itemName, itemDesc, itemPrice, itemImg, itemCategory}) {
   return (
     <Card sx={{ borderRadius: 3 }}>
       <CardActionArea>
         <CardMedia
-          className="category-img"
+          className="item-img"
           component="img"
           height="140"
-          src={categoryImg}
+          src={itemImg}
         />
         <CardContent>
           <Typography
@@ -23,7 +24,7 @@ export default function CategoryCard({categoryName, categoryImg}) {
               fontWeight: 700
             }}
           >
-            {categoryName}
+            {itemName}
           </Typography>
         </CardContent>
       </CardActionArea>

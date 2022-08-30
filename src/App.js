@@ -10,6 +10,7 @@ import ProfilePage from './pages/ProfilePage.js';
 import ExplorePage from './pages/ExplorePage.js';
 
 function App() {
+  //#region Declare UI elements
   // cart drawer state
   const [drawerState, setDrawerState] = React.useState({ right: false });
   // login/signup modal state
@@ -34,6 +35,7 @@ function App() {
   const handleClose = () => {
     setOpen(false);
   };
+  //#endregion
 
   return (
     <div className="App">
