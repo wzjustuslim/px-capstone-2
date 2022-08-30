@@ -15,7 +15,7 @@ import RedeemIcon from "@mui/icons-material/Redeem";
 import Footer from "../components/Footer.js";
 import { Link as RouterLink } from "react-router-dom";
 
-import "./LandingPage.css";
+import "../components/spinner.css";
 import CategorySection from "../components/CategorySection";
 
 const LandingPage = () => {

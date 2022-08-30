@@ -14,6 +14,24 @@ import CategoryTagsPageItemSection from "../components/CategoryTagsPageItemSecti
 import '../components/spinner.css';
 
 const splashImageUrl = "/static/images/hero-image.jpg";
+// const mockData = [
+//   {
+//     itemTags:['special-balls'],
+//     _id:'123123123',
+//     itemName:"Luxury Ball",
+//     itemDemo:"A cozy ball",
+//     itemPrice:3000,
+//     itemImage:'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/luxury-ball.png'
+//   },
+//   {
+//     itemTags:['healing'],
+//     _id:'12312323s123',
+//     itemName:"Potion",
+//     itemDemo:"Restore by 20 hp",
+//     itemPrice:200,
+//     itemImage:'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/potion.png'
+//   },
+// ]
 
 export default function CategoryTagsPage() {
   const params = useParams();
@@ -43,7 +61,21 @@ export default function CategoryTagsPage() {
         setAllPokeItems(transformedItems);
       } catch (error) {
         console.error(error.message);
-      }
+      } 
+      // comment this after check is done
+      // finally {
+      //   const transformedItems = mockData.map((pokeItems) => {
+      //     return {
+      //       id: pokeItems._id,
+      //       itemCategory: pokeItems.itemTags[0],
+      //       itemName: pokeItems.itemName,
+      //       itemDesc: pokeItems.itemDesc,
+      //       itemPrice: pokeItems.itemPrice,
+      //       itemImage: pokeItems.itemImage,
+      //     };
+      //   });
+      //   setAllPokeItems(transformedItems);
+      // }
       setLoading(false);
       //   console.log(res.data);
     };
