@@ -13,6 +13,7 @@ import CategoryTagsPageItemSection from "../components/CategoryTagsPageItemSecti
 import Img from "../static/images/pokeball-card.jpg";
 
 import "../components/spinner.css";
+import toProper from "../helper/toProper";
 
 const splashImageUrl = `../static/images/hero-image.jpg`;
 const mockData = [
@@ -149,7 +150,7 @@ export default function CategoryTagsPage() {
               height: "0rem",
             }}>
             <Avatar
-              alt={category}
+              alt={toProper(category)}
               src={Img}
               sx={{ width: "10rem", height: "10rem" }}
             />
@@ -172,7 +173,7 @@ export default function CategoryTagsPage() {
                 fontWeight: 900,
               }}>
               <br />
-              {category}
+              {toProper(category)}
             </Typography>
           </Box>
 

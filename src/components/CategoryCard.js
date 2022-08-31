@@ -6,6 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Link as RouterLink } from "react-router-dom";
+import toProper from "../helper/toProper.js";
 import Img from "../static/images/pokeball-card.jpg";
 
 export default function CategoryCard({ categoryName, categoryImg }) {
@@ -25,7 +26,7 @@ export default function CategoryCard({ categoryName, categoryImg }) {
             sx={{
               fontWeight: 700,
             }}>
-            {categoryName}
+            {toProper(categoryName)}
           </Typography>
           <Button
             component={RouterLink}

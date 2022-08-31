@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import { Box, CardActionArea } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
+import toProper from '../helper/toProper'
 import Img from "../static/images/pokeball-card.jpg";
 import "./ItemCard.css";
 
@@ -29,7 +30,7 @@ export default function ItemCard({
           component='img'
           height='160'
           image={itemImage}
-          alt={itemName}
+          alt={toProper(itemName)}
           sx = {{scale:'1'}}
         />
         <CardContent>
@@ -38,7 +39,7 @@ export default function ItemCard({
             sx={{
               fontWeight: 700,
             }}>
-            {itemName}
+            {toProper(itemName)}
           </Typography>
           <Typography variant='caption'>{itemDesc}</Typography>
           <Typography
