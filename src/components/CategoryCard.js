@@ -6,6 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Link as RouterLink } from "react-router-dom";
+import Img from "../static/images/pokeball-card.jpg";
 
 export default function CategoryCard({ categoryName, categoryImg }) {
   return (
@@ -14,12 +15,12 @@ export default function CategoryCard({ categoryName, categoryImg }) {
         <CardMedia
           className='category-img'
           component='img'
-          height='140'
-          src={categoryImg}
+          height='160'
+          src={Img}
         />
         <CardContent>
           <Typography
-            variant='h6'
+            variant='h5'
             component='div'
             sx={{
               fontWeight: 700,

@@ -12,16 +12,29 @@ import LoginIcon from "@mui/icons-material/Login";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import RedeemIcon from "@mui/icons-material/Redeem";
 
+import CategorySection from "../components/CategorySection";
 import Footer from "../components/Footer.js";
 import { Link as RouterLink } from "react-router-dom";
+import Img from "../static/images/pokeball-card.jpg";
 
 import "../components/spinner.css";
-import CategorySection from "../components/CategorySection";
+
+const mockCategory = [
+  {
+    categoryName:'healing',
+    categoryImg:'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/max-potion.png'
+  },
+  {
+    categoryName:'Ice Heal',
+    categoryImg:'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/ice-heal.png'
+  },
+]
 
 const LandingPage = () => {
   // pokeAPI method
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
+  const usingBackend = true;
 
   useEffect(() => {
     const getCategoriesFromPokeapi = async () => {
@@ -36,7 +49,12 @@ const LandingPage = () => {
       }
       setLoading(false);
     };
-    getCategoriesFromPokeapi();
+    const getMockCategory = () => {
+      setCategories(mockCategory)
+    }
+    usingBackend 
+    ? getCategoriesFromPokeapi()
+    : getMockCategory();
   }, []);
   // sorting from db
 

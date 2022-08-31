@@ -4,7 +4,7 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 import CategoryCard from "../components/CategoryCard.js";
-import CategoryImg from "../static/images/pokeball-card.jpg";
+// import CategoryImg from "../static/images/pokeball-card.jpg";
 
 const CategorySection = ({ categories }) => {
   return (
@@ -27,10 +27,10 @@ const CategorySection = ({ categories }) => {
           </Box>
         </Grid>
         {categories.map((category) => (
-          <Grid key={category} xs={12} sm={6} lg={4}>
+          <Grid key={category.name} xs={12} sm={6} lg={4}>
             <CategoryCard
               categoryName={category.name}
-              categoryImg={CategoryImg}
+              // categoryImg={category.categoryImg}
             />
           </Grid>
         ))}

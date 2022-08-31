@@ -10,6 +10,7 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import ItemCard from "../components/ItemCard";
 import CategoryTagsPageItemSection from "../components/CategoryTagsPageItemSection";
+import Img from "../static/images/pokeball-card.jpg";
 
 import "../components/spinner.css";
 
@@ -25,6 +26,15 @@ const mockData = [
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/luxury-ball.png",
   },
   {
+    itemTags: ["ice-heal"],
+    _id: "123123123",
+    itemName: "Ice Heal",
+    itemDemo: "Defrosts a frozen pokemon",
+    itemPrice: 200,
+    itemImage:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/ice-heal.png",
+  },
+  {
     itemTags: ["healing"],
     _id: "12312323s123",
     itemName: "Super Potion",
@@ -33,7 +43,7 @@ const mockData = [
     itemImage:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/potion.png",
   },
-  
+
   {
     itemTags: ["healing"],
     _id: "123a23s123",
@@ -43,7 +53,7 @@ const mockData = [
     itemImage:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/potion.png",
   },
-  
+
   {
     itemTags: ["healing"],
     _id: "12d12223s123",
@@ -63,10 +73,12 @@ export default function CategoryTagsPage() {
   const [allPokeItems, setAllPokeItems] = useState([]);
   const [categoryItems, setCategoryItems] = useState([]);
 
+  const usingBackend = true;
+
   useEffect(() => {
     const getAllItemsFromDB = async () => {
       setLoading(true);
-      if (false) {
+      if (usingBackend) {
         try {
           const url = "https://pokemartdb-backend.herokuapp.com/api/items";
           const res = await axios.get(url);
@@ -87,21 +99,23 @@ export default function CategoryTagsPage() {
         } catch (error) {
           console.error(error.message);
         }
+      } else {
+        // comment this after check is done
+        const transformedItems = mockData.map((pokeItems) => {
+          return {
+            id: pokeItems._id,
+            itemCategory: pokeItems.itemTags[0],
+            itemName: pokeItems.itemName,
+            itemDesc: pokeItems.itemDemo,
+            itemPrice: pokeItems.itemPrice,
+            itemImage: pokeItems.itemImage,
+          };
+        });
+        console.log(transformedItems);
+        setAllPokeItems(transformedItems);
       }
-      // comment this after check is done
-      const transformedItems = mockData.map((pokeItems) => {
-        return {
-          id: pokeItems._id,
-          itemCategory: pokeItems.itemTags[0],
-          itemName: pokeItems.itemName,
-          itemDesc: pokeItems.itemDemo,
-          itemPrice: pokeItems.itemPrice,
-          itemImage: pokeItems.itemImage,
-        };
-      });
-      console.log(transformedItems);
-      setAllPokeItems(transformedItems);
       setLoading(false);
+
       //   console.log(res.data);
     };
     getAllItemsFromDB();
@@ -128,42 +142,45 @@ export default function CategoryTagsPage() {
               display: "flex",
               alignItems: "flex-end",
             }}></Box>
-            <Box
-              component='div'
-              sx={{
-                px:2,
-                height: "0rem",
-              }}>
-              <Avatar
-                alt={category}
-                src={splashImageUrl}
-                sx={{ width: '10rem', height: '10rem' }}
-              />
-            </Box><Box
+          <Box
+            component='div'
+            sx={{
+              px: 2,
+              height: "0rem",
+            }}>
+            <Avatar
+              alt={category}
+              src={Img}
+              sx={{ width: "10rem", height: "10rem" }}
+            />
+          </Box>
+          <Box
             component='div'
             sx={{
               bgcolor: "#cfe2fc",
               height: "15rem",
               display: "flex",
               alignItems: "flex-end",
-            }}><Typography
+            }}>
+            <Typography
               component='h1'
               variant='h3'
               align='left'
               gutterBottom
               sx={{
-                px:2,
+                px: 2,
                 fontWeight: 900,
               }}>
               <br />
               {category}
-            </Typography></Box>
-            
-            <Box
-              component='div'
-              sx={{
-                height: "100%",
-              }}></Box>
+            </Typography>
+          </Box>
+
+          <Box
+            component='div'
+            sx={{
+              height: "100%",
+            }}></Box>
         </section>
         <section>
           {!loading && <CategoryTagsPageItemSection items={categoryItems} />}
