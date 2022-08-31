@@ -12,7 +12,7 @@ import Img from "../static/images/pokeball-card.jpg";
 export default function CategoryCard({ categoryName, categoryImg }) {
   return (
     <Card sx={{ borderRadius: 3 }}>
-      <CardActionArea>
+      <CardActionArea component={RouterLink} to={`/categories/${categoryName}`}>
         <CardMedia
           className='category-img'
           component='img'
@@ -28,7 +28,7 @@ export default function CategoryCard({ categoryName, categoryImg }) {
             }}>
             {toProper(categoryName)}
           </Typography>
-          <Button
+          {/* <Button
             component={RouterLink}
             to={`/categories/${categoryName}`}
             variant='contained'
@@ -37,7 +37,10 @@ export default function CategoryCard({ categoryName, categoryImg }) {
               px: 6,
               py: 2,
               borderRadius: 3,
-            }}>View</Button>
+              backgroundColor: "red",
+            }}>
+            View
+          </Button> */}
         </CardContent>
       </CardActionArea>
     </Card>
