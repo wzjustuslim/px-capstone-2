@@ -89,7 +89,7 @@ export default function CategoryTagsPage() {
                 id: pokeItems._id,
                 itemCategory: pokeItems.itemTags[0],
                 itemName: pokeItems.itemName,
-                itemDesc: pokeItems.itemDesc,
+                itemDesc: pokeItems.itemDemo,
                 itemPrice: pokeItems.itemPrice,
                 itemImage: pokeItems.itemImage,
               };
