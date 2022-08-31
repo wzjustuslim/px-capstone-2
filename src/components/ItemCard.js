@@ -15,10 +15,9 @@ export default function ItemCard({
   itemName,
   itemDesc,
   itemPrice,
-  itemImg,
+  itemImage,
   itemCategory,
 }) {
-  const imgURL = itemImg;
   return (
     <Card sx={{ borderRadius: 3 }}>
       <CardActionArea>
@@ -26,7 +25,7 @@ export default function ItemCard({
           className='item-img'
           component='img'
           height='160'
-          image={imgURL}
+          image={itemImage}
           alt={itemName}
         />
         <CardContent>
