@@ -1,4 +1,6 @@
 import React, { useState, useContext} from "react";
+import axios from "axios";
+import { useCookies } from "react-cookie";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -11,9 +13,8 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import axios from "axios";
 
-import AuthContext from "../store/auth-context";
+import AuthContext from "../contexts/auth-context";
 
 export default function AuthFormDialog({
   open,
@@ -32,11 +33,13 @@ export default function AuthFormDialog({
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
 
+  const [loggedInUser, setLoggedInUser] = useState();
   const authCtx = useContext(AuthContext);
 
   const handleTabs = (event, newValue) => {
     setAuthType(newValue);
   };
+
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -82,17 +85,16 @@ export default function AuthFormDialog({
     e.preventDefault();
     setIsUser(true);
     // post new user into db
-    if (sessionStorage.getItem("authToken"))
+    if (sessionStorage.getItem("connect.sid"))
       navigate.push("/login");
     const config = {
       headers: {
         "Content-type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
       },
     };
     try {
       const { data } = await axios.post(
-        "https://pokemartdb-backend.herokuapp.com/api/login",
+        "https://pokemartdb-backend.herokuapp.com/login",
         {
           email: enteredEmail,
           password: enteredPassword,
