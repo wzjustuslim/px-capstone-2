@@ -70,7 +70,7 @@ export default function AuthFormDialog({
         config
       );
 
-      sessionStorage.setItem("authToken", JSON.stringify(data));
+      sessionStorage.setItem("userInfo", JSON.stringify(data));
       navigate.push("/");
     } catch (error) {
       setError(error.response.data.error);
@@ -85,7 +85,7 @@ export default function AuthFormDialog({
     e.preventDefault();
     setIsUser(true);
     // post new user into db
-    if (sessionStorage.getItem("connect.sid"))
+    if (sessionStorage.getItem("userInfo"))
       navigate.push("/login");
     const config = {
       headers: {
@@ -102,7 +102,7 @@ export default function AuthFormDialog({
         config
       );
     } catch (error) {
-      sessionStorage.removeItem("authToken");
+      sessionStorage.removeItem("userInfo");
       setError("Username password combination is wrong, please try again.")
     }
     // show log in successful screen
