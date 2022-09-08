@@ -1,7 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
 import * as React from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Navigate, Routes, Route, useNavigate } from "react-router-dom";
 import ResponsiveAppBar from "./components/ResponsiveAppBar.js";
 import TemporaryDrawer from "./components/TemporaryDrawer.js";
 import AuthFormDialog from "./components/AuthFormDialog.js";
@@ -26,7 +26,6 @@ function App() {
   // check if authenticated
   const ctx = React.useContext(AuthContext);
 
-  const navigate = useNavigate();
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -50,7 +49,7 @@ function App() {
 
   React.useEffect(() => {
     ctx.isLoggedIn ? setIsUser(true) : setIsUser(false);
-    setIsLoggedIn(ctx.isLoggedIn )
+    setIsLoggedIn(ctx.isLoggedIn);
   }, [isUser, ctx]);
 
   return (
@@ -75,10 +74,9 @@ function App() {
           setAuthType={setAuthType}
           setIsUser={setIsUser}
           handleClose={handleClose}
-          navigate={navigate}
         />
         <Routes>
-          <Route path='/' element={<LandingPage />} />
+          <Route path='/' exact element={<LandingPage />} />
           <Route path='/profile' element={<ProfilePage />} />
           <Route path='/explore' element={<ExplorePage />} />
           {/* <Route path="/categories/:category" exact element={<CategorySideDrawerPage />} /> */}
@@ -87,6 +85,7 @@ function App() {
             exact
             element={<CategoryTagsPage />}
           />
+          <Route path='*' element={<Navigate to='/' replace />} />
         </Routes>
       </div>
     </AuthContext.Provider>
