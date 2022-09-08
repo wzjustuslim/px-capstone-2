@@ -19,6 +19,8 @@ import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Link from "@mui/material/Link";
 
+import AuthContext from "../contexts/auth-context";
+
 const pages = ["Stats"];
 const guestSettings = ["Log in", "Sign up"];
 const userSettings = ["Profile", "My Items", "Wallet", "Log out"];
@@ -32,6 +34,8 @@ const ResponsiveAppBar = ({
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [userWalletBalance, setUserWalletBalance] = React.useState(1000);
+
+  const ctx = React.useContext(AuthContext);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -56,10 +60,10 @@ const ResponsiveAppBar = ({
         setAuthType("signup");
         handleClickOpen();
         break;
-      // default:
-      //   setAuthType('signup')
-      //   handleClickOpen()
-      //   break;
+        // if user click outside of drop-down menu, instead of clicking on login/signup
+      default:
+        handleCloseNavMenu()
+        break;
     }
     setAnchorElUser(null);
   };
@@ -206,7 +210,7 @@ const ResponsiveAppBar = ({
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}>
-              {isUser
+              {ctx.isLoggedIn
                 ? userSettings.map((setting) => (
                     <Link
                       key={setting}
@@ -233,7 +237,7 @@ const ResponsiveAppBar = ({
                   ))}
             </Menu>
           </Box>
-          {isUser ? (
+          {ctx.isLoggedIn ? (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title='Wallet'>
                 <IconButton sx={{ p: 2 }}>
@@ -248,7 +252,7 @@ const ResponsiveAppBar = ({
               </Tooltip>
             </Box>
           ) : (
-            console.log("false")
+            console.log("ctx.isLoggedIn is false")
           )}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title='Cart'>
