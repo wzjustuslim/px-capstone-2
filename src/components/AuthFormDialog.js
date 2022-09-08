@@ -1,6 +1,6 @@
-import React, { useState, useContext} from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
-import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -22,7 +22,6 @@ export default function AuthFormDialog({
   setAuthType,
   setIsUser,
   handleClose,
-  navigate,
 }) {
   const [newUsername, setNewUsername] = useState("");
   const [newEmail, setNewEmail] = useState("");
@@ -34,12 +33,17 @@ export default function AuthFormDialog({
   const [enteredPassword, setEnteredPassword] = useState("");
 
   const [loggedInUser, setLoggedInUser] = useState();
-  const authCtx = useContext(AuthContext);
+  const ctx = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const handleTabs = (event, newValue) => {
     setAuthType(newValue);
   };
 
+  React.useEffect(() => {
+    ctx.isLoggedIn ? setIsUser(true) : setIsUser(false);
+  }, [ctx]);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -61,7 +65,7 @@ export default function AuthFormDialog({
     };
     try {
       const { data } = await axios.post(
-        "https://pokemartdb-backend.herokuapp.com/api/register",
+        "https://pokemartdb-backend.herokuapp.com/register",
         {
           email: newEmail,
           username: newUsername,
@@ -71,9 +75,13 @@ export default function AuthFormDialog({
       );
 
       sessionStorage.setItem("userInfo", JSON.stringify(data));
-      navigate.push("/");
-    } catch (error) {
-      setError(error.response.data.error);
+      //navigate("/");
+      console.log("Successfully created account! Response from backend:", data);
+      setIsUser(true);
+      handleClose();
+    } catch (e) {
+      console.log(e);
+      setError(e);
       setTimeout(() => {
         setError("");
       }, 5000);
@@ -85,8 +93,11 @@ export default function AuthFormDialog({
     e.preventDefault();
     setIsUser(true);
     // post new user into db
-    if (sessionStorage.getItem("userInfo"))
-      navigate.push("/login");
+    if (sessionStorage.getItem("userInfo")  === "Main Page, Backend running") {
+      setIsUser(true);
+      ctx.isLoggedIn = true;
+      handleClose();
+    }
     const config = {
       headers: {
         "Content-type": "application/json",
@@ -101,9 +112,14 @@ export default function AuthFormDialog({
         },
         config
       );
+      console.log(data);
+      if (data === "Main Page, Backend running") {
+        console.log("User's logged in");
+        ctx.isLoggedIn = true;
+      }
     } catch (error) {
       sessionStorage.removeItem("userInfo");
-      setError("Username password combination is wrong, please try again.")
+      setError("Username password combination is wrong, please try again.");
     }
     // show log in successful screen
   };
