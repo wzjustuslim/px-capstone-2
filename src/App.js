@@ -45,11 +45,14 @@ function App() {
   const handleClose = () => {
     setOpen(false);
   };
+  const handleLoginSucess = () => {
+    setIsLoggedIn(true);
+  };
+  
   //#endregion
 
   React.useEffect(() => {
     ctx.isLoggedIn ? setIsUser(true) : setIsUser(false);
-    setIsLoggedIn(ctx.isLoggedIn);
   }, [isUser, ctx]);
 
   return (
@@ -60,6 +63,7 @@ function App() {
       <div className='App'>
         <ResponsiveAppBar
           isUser={isUser}
+          isLoggedIn={isLoggedIn}
           toggleDrawer={toggleDrawer}
           handleClickOpen={handleClickOpen}
           setAuthType={setAuthType}
@@ -73,6 +77,7 @@ function App() {
           authType={authType}
           setAuthType={setAuthType}
           setIsUser={setIsUser}
+          handleLoginSucess={handleLoginSucess}
           handleClose={handleClose}
         />
         <Routes>

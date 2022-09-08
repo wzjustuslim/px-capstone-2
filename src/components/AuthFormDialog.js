@@ -21,6 +21,7 @@ export default function AuthFormDialog({
   authType,
   setAuthType,
   setIsUser,
+  handleLoginSucess,
   handleClose,
 }) {
   const [newUsername, setNewUsername] = useState("");
@@ -32,18 +33,13 @@ export default function AuthFormDialog({
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
 
-  const [loggedInUser, setLoggedInUser] = useState();
   const ctx = useContext(AuthContext);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleTabs = (event, newValue) => {
     setAuthType(newValue);
   };
-
-  React.useEffect(() => {
-    ctx.isLoggedIn ? setIsUser(true) : setIsUser(false);
-  }, [ctx]);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -57,27 +53,44 @@ export default function AuthFormDialog({
       }, 5000);
       return setError("Passwords do not match!");
     }
+    // clear session store
+    if (sessionStorage.getItem("userInfo"))
+      sessionStorage.removeItem("userInfo");
+
     // post new user into db
     const config = {
       headers: {
         "Content-type": "application/json",
       },
     };
+    const body = {
+      email: newEmail,
+      username: newUsername,
+      password: newPassword,
+    };
     try {
       const { data } = await axios.post(
         "https://pokemartdb-backend.herokuapp.com/register",
-        {
-          email: newEmail,
-          username: newUsername,
-          password: newPassword,
-        },
+        body,
         config
       );
 
-      sessionStorage.setItem("userInfo", JSON.stringify(data));
+      if (ctx.isUseBackend) {
+        sessionStorage.setItem("userInfo", JSON.stringify(data));
+        console.log(
+          "Successfully created account! Response from backend:",
+          data
+        );
+      } else {
+        const newUser = {
+          email: newEmail,
+          role: "user",
+        };
+        sessionStorage.setItem("userInfo", JSON.stringify(newUser));
+      }
       //navigate("/");
-      console.log("Successfully created account! Response from backend:", data);
       setIsUser(true);
+      handleLoginSucess();
       handleClose();
     } catch (e) {
       console.log(e);
@@ -92,36 +105,39 @@ export default function AuthFormDialog({
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsUser(true);
-    // post new user into db
-    if (sessionStorage.getItem("userInfo")  === "Main Page, Backend running") {
+    // check sessionStorage if user is already saved as authenticated user
+    if (sessionStorage.getItem("userInfo") === "Main Page, Backend running") {
       setIsUser(true);
-      ctx.isLoggedIn = true;
+      handleLoginSucess();
       handleClose();
-    }
-    const config = {
-      headers: {
-        "Content-type": "application/json",
-      },
-    };
-    try {
-      const { data } = await axios.post(
-        "https://pokemartdb-backend.herokuapp.com/login",
-        {
-          email: enteredEmail,
-          password: enteredPassword,
+    } else {
+      // post new user into db
+      const config = {
+        headers: {
+          "Content-type": "application/json",
         },
-        config
-      );
-      console.log(data);
-      if (data === "Main Page, Backend running") {
+      };
+      try {
+        const { data } = await axios.post(
+          "https://pokemartdb-backend.herokuapp.com/login",
+          {
+            email: enteredEmail,
+            password: enteredPassword,
+          },
+          config
+        );
+        console.log(data);
+        // if (data === "Main Page, Backend running") {
         console.log("User's logged in");
-        ctx.isLoggedIn = true;
+        handleLoginSucess();
+        handleClose();
+        // }
+      } catch (error) {
+        sessionStorage.removeItem("userInfo");
+        setError("Username password combination is wrong, please try again.");
       }
-    } catch (error) {
-      sessionStorage.removeItem("userInfo");
-      setError("Username password combination is wrong, please try again.");
+      // show log in successful screen
     }
-    // show log in successful screen
   };
 
   return (

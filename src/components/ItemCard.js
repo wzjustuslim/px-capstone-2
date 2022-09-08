@@ -71,7 +71,7 @@ export default function ItemCard({
                 py: 2,
                 borderRadius: 3,
               }}>
-              Buy
+              Add to Cart
             </Button>
           </Box>
         </CardContent>

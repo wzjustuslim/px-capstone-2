@@ -125,7 +125,7 @@ export default function CategoryTagsPage() {
   //filter to selected category
   useEffect(() => {
     loading
-      ? console.log()
+      ? console.log('Loading items from DB')
       : setCategoryItems(
           allPokeItems.filter((items) => items.itemCategory === category)
         );
