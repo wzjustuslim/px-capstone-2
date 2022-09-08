@@ -68,3 +68,15 @@
   width: 100%;
   height: 100%;
 }
+
+.explore-card-actions {
+  visibility: hidden;
+}
+
+.explore-card:hover .explore-card-actions {
+  visibility: visible;
+}
+
+.explore-card-media {
+  width: 60px;
+}
