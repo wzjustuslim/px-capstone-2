@@ -38,6 +38,7 @@ const ResponsiveAppBar = ({
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [userWalletBalance, setUserWalletBalance] = React.useState(1000);
+  const [noOfItemsInCart, setNoOfItemsInCart] = React.useState(2);
 
   const ctx = React.useContext(AuthContext);
 
@@ -50,7 +51,7 @@ const ResponsiveAppBar = ({
   };
 
   const handleCloseNavMenu = () => {
-    console.log('do i run')
+    console.log("do i run");
     setAnchorElNav(null);
   };
 
@@ -70,7 +71,7 @@ const ResponsiveAppBar = ({
         break;
       // if user click outside of drop-down menu, instead of clicking on login/signup
       default:
-        console.log()
+        console.log();
         // handleCloseNavMenu();
         break;
     }
@@ -273,6 +274,9 @@ const ResponsiveAppBar = ({
                       fontSize='large'
                       sx={{ color: "white" }}
                     />
+                    <Typography textAlign='center' sx={{ color: "white" }}>
+                      {noOfItemsInCart}
+                    </Typography>
                   </IconButton>
                 </Tooltip>
               </Box>
