@@ -11,6 +11,7 @@ import ExplorePage from "./pages/ExplorePage.js";
 // import CategorySideDrawerPage from './pages/CategoryPage.js';
 import CategoryTagsPage from "./pages/CategoryTagsPage.js";
 import AuthContext from "./contexts/auth-context";
+import CartProvider from "./contexts/CartProvider";
 
 function App() {
   //#region Declare UI elements
@@ -23,9 +24,9 @@ function App() {
   // is user
   const [isUser, setIsUser] = React.useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [noOfItemsInCart, setNoOfItemsInCart] = React.useState(0);
   // check if authenticated
-  const ctx = React.useContext(AuthContext);
-
+  const authCtx = React.useContext(AuthContext);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -48,53 +49,55 @@ function App() {
   const handleLoginSucess = () => {
     setIsLoggedIn(true);
   };
-  
+
   //#endregion
 
   React.useEffect(() => {
-    ctx.isLoggedIn ? setIsUser(true) : setIsUser(false);
-  }, [isUser, ctx]);
+    authCtx.isLoggedIn ? setIsUser(true) : setIsUser(false);
+  }, [isUser, authCtx]);
 
   return (
     <AuthContext.Provider
       value={{
         isLoggedIn: isLoggedIn,
       }}>
-      <div className='App'>
-        <ResponsiveAppBar
-          isUser={isUser}
-          setIsUser={setIsUser}
-          isLoggedIn={isLoggedIn}
-          setIsLoggedIn={setIsLoggedIn}
-          toggleDrawer={toggleDrawer}
-          handleClickOpen={handleClickOpen}
-          setAuthType={setAuthType}
-        />
-        <TemporaryDrawer
-          drawerState={drawerState}
-          toggleDrawer={toggleDrawer}
-        />
-        <AuthFormDialog
-          open={open}
-          authType={authType}
-          setAuthType={setAuthType}
-          setIsUser={setIsUser}
-          handleLoginSucess={handleLoginSucess}
-          handleClose={handleClose}
-        />
-        <Routes>
-          <Route path='/' exact element={<LandingPage />} />
-          <Route path='/profile' element={<ProfilePage />} />
-          <Route path='/explore' element={<ExplorePage />} />
-          {/* <Route path="/categories/:category" exact element={<CategorySideDrawerPage />} /> */}
-          <Route
-            path='/categories/:category'
-            exact
-            element={<CategoryTagsPage />}
+      <CartProvider>
+        <div className='App'>
+          <ResponsiveAppBar
+            isUser={isUser}
+            setIsUser={setIsUser}
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+            toggleDrawer={toggleDrawer}
+            handleClickOpen={handleClickOpen}
+            setAuthType={setAuthType}
           />
-          <Route path='*' element={<Navigate to='/' replace />} />
-        </Routes>
-      </div>
+          <TemporaryDrawer
+            drawerState={drawerState}
+            toggleDrawer={toggleDrawer}
+          />
+          <AuthFormDialog
+            open={open}
+            authType={authType}
+            setAuthType={setAuthType}
+            setIsUser={setIsUser}
+            handleLoginSucess={handleLoginSucess}
+            handleClose={handleClose}
+          />
+          <Routes>
+            <Route path='/' exact element={<LandingPage />} />
+            <Route path='/profile' element={<ProfilePage />} />
+            <Route path='/explore' element={<ExplorePage />} />
+            {/* <Route path="/categories/:category" exact element={<CategorySideDrawerPage />} /> */}
+            <Route
+              path='/categories/:category'
+              exact
+              element={<CategoryTagsPage />}
+            />
+            <Route path='*' element={<Navigate to='/' replace />} />
+          </Routes>
+        </div>
+      </CartProvider>
     </AuthContext.Provider>
   );
 }

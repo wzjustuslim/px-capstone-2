@@ -21,6 +21,7 @@ import Link from "@mui/material/Link";
 
 import AuthContext from "../contexts/auth-context";
 import { BreakfastDiningOutlined } from "@mui/icons-material";
+import CartContext from "../contexts/cart-context";
 
 const pages = ["Stats"];
 const guestSettings = ["Log in", "Sign up"];
@@ -38,9 +39,12 @@ const ResponsiveAppBar = ({
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [userWalletBalance, setUserWalletBalance] = React.useState(1000);
-  const [noOfItemsInCart, setNoOfItemsInCart] = React.useState(2);
 
-  const ctx = React.useContext(AuthContext);
+  const authCtx = React.useContext(AuthContext);
+  const cartCtx = React.useContext(CartContext);
+  const noOfItemsInCart = cartCtx.items.reduce((curr, item) => {
+    return curr + item.qty
+  }, 0)
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -54,6 +58,8 @@ const ResponsiveAppBar = ({
     console.log("do i run");
     setAnchorElNav(null);
   };
+
+  
 
   const handleCloseUserMenu = (setting) => {
     console.log("im running", setting);
@@ -219,7 +225,7 @@ const ResponsiveAppBar = ({
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}>
-              {ctx.isLoggedIn
+              {authCtx.isLoggedIn
                 ? userSettings.map((setting) => (
                     <Link
                       key={setting}
@@ -246,7 +252,7 @@ const ResponsiveAppBar = ({
                   ))}
             </Menu>
           </Box>
-          {ctx.isLoggedIn ? (
+          {authCtx.isLoggedIn ? (
             <>
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title='Wallet'>

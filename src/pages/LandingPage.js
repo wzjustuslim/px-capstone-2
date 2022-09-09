@@ -42,7 +42,7 @@ const LandingPage = () => {
       try {
         const url = `https://pokeapi.co/api/v2/item-category/?limit=50`;
         const { data: response } = await axios.get(url);
-        console.log(response.results);
+        // console.log(response.results);
         setCategories(response.results);
       } catch (error) {
         console.error(error.message);

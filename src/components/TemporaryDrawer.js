@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useState, useContext } from "react";
+
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
@@ -13,20 +15,28 @@ import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import CategoryIcon from "@mui/icons-material/Category";
+import CartContext from "../contexts/cart-context";
+import { Avatar } from "@mui/material";
 
 const menuList = [
   {
-    item: "324erw",
+    id: "324erw",
     name: "pokeball",
     qty: 5,
   },
   {
-    item: "14er2w",
+    id: "14er2w",
     name: "Super Heal",
     qty: 6,
   },
 ];
-export default function TemporaryDrawer({ drawerState, toggleDrawer }) {
+export default function TemporaryDrawer({
+  drawerState,
+  toggleDrawer,
+}) {
+
+  const cartCtx = useContext(CartContext);
+
   const list = (anchor) => (
     <Box
       sx={{ width: 250 }}
@@ -34,24 +44,16 @@ export default function TemporaryDrawer({ drawerState, toggleDrawer }) {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}>
       <List>
-        {menuList.map((item, index) => (
-          <ListItem key={item.item} disablePadding>
+        {cartCtx.items.map((item) => (
+          <ListItem key={item.id} disablePadding>
             <ListItemButton>
-              <ListItemIcon>
-                {index === 0 ? (
-                  <CatchingPokemonIcon />
-                ) : index === 1 ? (
-                  <CategoryIcon />
-                ) : (
-                  <></>
-                )}
-              </ListItemIcon>
-              <ListItemText primary={item.name} />
+              <Avatar alt={item.name} src={item.image} />
+              <ListItemText primary={"x" + item.qty + "\t" + item.name} />
               <ListItemText
-                primary={"x" + item.qty}
+                primary={item.price}
                 sx={{
                   display: "flex",
-                  flexDirection: "row-reverse"
+                  flexDirection: "row-reverse",
                 }}
               />
             </ListItemButton>

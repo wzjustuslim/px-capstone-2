@@ -33,7 +33,7 @@ export default function AuthFormDialog({
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
 
-  const ctx = useContext(AuthContext);
+  const authCtx = useContext(AuthContext);
 
   // const navigate = useNavigate();
 
@@ -75,7 +75,7 @@ export default function AuthFormDialog({
         config
       );
 
-      if (ctx.isUseBackend) {
+      if (authCtx.isUseBackend) {
         sessionStorage.setItem("userInfo", JSON.stringify(data));
         console.log(
           "Successfully created account! Response from backend:",
