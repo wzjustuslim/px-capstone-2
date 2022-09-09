@@ -5,6 +5,11 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2";
+import Chip from '@mui/material/Chip';
+// import ListItem from '@mui/material/ListItem';
+import Paper from '@mui/material/Paper';
+
+
 import ExploreCard from "../components/ExploreCard.js";
 
 import Banner from "../static/images/explore-banner1.jpg";
@@ -13,25 +18,37 @@ import Pokeball from "../static/images/pokeball-card.jpg";
 const ExplorePage = () => {  
 
   const [items, setItems] = useState([]);
+  const [displayItems, setDisplayItems] = useState([])
+  const [displayCategories, setDisplayCategories] = useState([])
 
   useEffect(() => {
-
     const getAllItems = async () => {
       const res = await axios.get('https://pokemartdb-backend.herokuapp.com/api/items');
-
-      const { data: { data: itemsArray } } = res;
+      const { data: { data: allItems } } = res;
       
-      setItems(itemsArray);
+      const categoriesSet = new Set();
+      allItems.forEach((item) => categoriesSet.add(item.itemTags[0]))
+      const categoriesArr = Array.from(categoriesSet)
+      categoriesArr.push('show-all')
 
-      await console.log(items)
-      
+      setItems(allItems);
+      setDisplayItems(allItems);
+      setDisplayCategories(categoriesArr);
     }
 
     getAllItems()
+  }, []);
 
-  },[]);
+  const handleChip = (category) => {
+    if (category === 'show-all') {
+      setDisplayItems(items);
+    } else {
+      const filteredItems = items.filter(item => item.itemTags[0] === category);
+      setDisplayItems(filteredItems);
+    }
+
+  };
   
-
   return (
     <>
       <main>
@@ -114,10 +131,34 @@ const ExplorePage = () => {
         </section>
         <section>
           <Container maxWidth='xl'>
-            <Grid container spacing={3}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                pb: '3rem',
+              }}
+            >
+
               {
-                items.map((item, index) => (
-                  <ExploreCard key={index} item={item} />
+                displayCategories.map((category) => (
+                  <Chip
+                    key={category}
+                    label={category}
+                    onClick={() => { handleChip(category) }}
+                    sx={{ mr: 1, mb: 1 }}
+                  />
+                ))
+              }
+            </Box>
+            
+          </Container>
+        </section>
+        <section>
+          <Container maxWidth='xl'>
+            <Grid container spacing={3} sx={{ pb: '3rem' }}>
+              {
+                displayItems.map((item, index) => (
+                  <ExploreCard key={index} item={item} displayCategories={displayCategories} />
                 ))
               }
             </Grid>
