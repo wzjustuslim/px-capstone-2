@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Unstable_Grid2";
 import ItemCard from "./ItemCard.js";
-import { convertLength } from "@mui/material/styles/cssUtils.js";
 
 const CategoryTagsPageItemSection = ({ items }) => {
   return (
@@ -27,7 +26,6 @@ const CategoryTagsPageItemSection = ({ items }) => {
         </Grid>
         {items.map((item) => (
           <Grid key={item.id} xs={12} sm={6} lg={4}>
-            {/* {console.log(item.itemDesc)} */}
             <ItemCard
               id={item.id}
               itemCategory={item.itemCategory}

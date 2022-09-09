@@ -9,12 +9,9 @@ import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import CategoryIcon from "@mui/icons-material/Category";
+import Typography from "@mui/material/Typography";
+
 import CartContext from "../contexts/cart-context";
 import { Avatar } from "@mui/material";
 
@@ -30,11 +27,7 @@ const menuList = [
     qty: 6,
   },
 ];
-export default function TemporaryDrawer({
-  drawerState,
-  toggleDrawer,
-}) {
-
+export default function TemporaryDrawer({ drawerState, toggleDrawer }) {
   const cartCtx = useContext(CartContext);
 
   const list = (anchor) => (
@@ -43,11 +36,29 @@ export default function TemporaryDrawer({
       role='presentation'
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}>
+      <Box sx={{ display: "flex", justifyContent:'space-between' }}>
+        <Typography
+          variant='subtitle2'
+          sx={{ml:'1rem', fontWeight: 700,}}>
+          Qty
+        </Typography>
+        <Typography
+          sx={{ fontWeight: 700}}
+          variant='subtitle2' >
+          Item
+        </Typography>
+        <Typography
+          variant='subtitle2'
+          sx={{mr:'1rem', fontWeight: 700}}>
+          Amount
+        </Typography>
+      </Box>
+      <Divider />
       <List>
         {cartCtx.items.map((item) => (
           <ListItem key={item.id} disablePadding>
             <ListItemButton>
-              <Avatar alt={item.name} src={item.image} />
+              <Avatar alt={item.name} src={item.image} variant="square" />
               <ListItemText primary={"x" + item.qty + "\t" + item.name} />
               <ListItemText
                 primary={item.price}
