@@ -20,13 +20,16 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Link from "@mui/material/Link";
 
 import AuthContext from "../contexts/auth-context";
+import { BreakfastDiningOutlined } from "@mui/icons-material";
 
 const pages = ["Stats"];
 const guestSettings = ["Log in", "Sign up"];
 const userSettings = ["Profile", "My Items", "Wallet", "Log out"];
 
 const ResponsiveAppBar = ({
+  setIsUser,
   isUser,
+  setIsLoggedIn,
   isLoggedIn,
   toggleDrawer,
   handleClickOpen,
@@ -47,6 +50,7 @@ const ResponsiveAppBar = ({
   };
 
   const handleCloseNavMenu = () => {
+    console.log('do i run')
     setAnchorElNav(null);
   };
 
@@ -61,9 +65,13 @@ const ResponsiveAppBar = ({
         setAuthType("signup");
         handleClickOpen();
         break;
+      case "Log out":
+        setIsLoggedIn(false);
+        break;
       // if user click outside of drop-down menu, instead of clicking on login/signup
       default:
-        handleCloseNavMenu();
+        console.log()
+        // handleCloseNavMenu();
         break;
     }
     setAnchorElUser(null);

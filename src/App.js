@@ -63,7 +63,9 @@ function App() {
       <div className='App'>
         <ResponsiveAppBar
           isUser={isUser}
+          setIsUser={setIsUser}
           isLoggedIn={isLoggedIn}
+          setIsLoggedIn={setIsLoggedIn}
           toggleDrawer={toggleDrawer}
           handleClickOpen={handleClickOpen}
           setAuthType={setAuthType}
