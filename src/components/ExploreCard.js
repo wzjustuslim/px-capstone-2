@@ -12,6 +12,11 @@ import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 
 export default function ExploreCard({ item }) {
   const { itemImage, itemName, itemPrice } = item;
+
+  const handleItemClick = () => {
+    console.log(item);
+  };
+
   return (
     <Grid xs={6} sm={4} md={3} lg={2}>
       <Card
@@ -21,7 +26,9 @@ export default function ExploreCard({ item }) {
           borderRadius: '12px',
         }}
       >
-        <CardActionArea>
+        <CardActionArea
+          onClick={handleItemClick}
+        >
           <CardContent sx={{ pb: 1 }}>
             <Box
               sx={{
