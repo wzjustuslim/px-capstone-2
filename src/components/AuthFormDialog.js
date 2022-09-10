@@ -31,6 +31,7 @@ export default function AuthFormDialog({
   const [error, setError] = useState("");
 
   const [enteredEmail, setEnteredEmail] = useState("");
+  const [enteredUsername, setEnteredUsername] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
 
   const authCtx = useContext(AuthContext);
@@ -122,11 +123,12 @@ export default function AuthFormDialog({
           "https://pokemartdb-backend.herokuapp.com/login",
           {
             email: enteredEmail,
+            username: enteredUsername,
             password: enteredPassword,
           },
           config
         );
-        console.log(data);
+        console.log(data.headers);
         // if (data === "Main Page, Backend running") {
         console.log("User's logged in");
         handleLoginSucess();
@@ -240,6 +242,17 @@ export default function AuthFormDialog({
                 required
                 value={enteredEmail}
                 onChange={(e) => setEnteredEmail(e.target.value)}
+              />
+              <TextField
+                name='username'
+                label='Username'
+                margin='normal'
+                type='username'
+                fullWidth
+                variant='outlined'
+                required
+                value={enteredUsername}
+                onChange={(e) => setEnteredUsername(e.target.value)}
               />
               <TextField
                 name='password'
