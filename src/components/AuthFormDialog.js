@@ -71,7 +71,7 @@ export default function AuthFormDialog({
     };
     try {
       const { data } = await axios.post(
-        "https://pokemartdb-backend.herokuapp.com/register",
+        process.env.REACT_APP_ENDPOINT+'/register',
         body,
         config
       );
@@ -120,7 +120,7 @@ export default function AuthFormDialog({
       };
       try {
         const { data } = await axios.post(
-          "https://pokemartdb-backend.herokuapp.com/login",
+          process.env.REACT_APP_ENDPOINT + '/login',
           {
             email: enteredEmail,
             username: enteredUsername,
