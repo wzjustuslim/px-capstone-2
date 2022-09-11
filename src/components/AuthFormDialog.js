@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -35,8 +34,6 @@ export default function AuthFormDialog({
   const [enteredPassword, setEnteredPassword] = useState("");
 
   const authCtx = useContext(AuthContext);
-
-  // const navigate = useNavigate();
 
   const handleTabs = (event, newValue) => {
     setAuthType(newValue);
@@ -89,7 +86,6 @@ export default function AuthFormDialog({
         };
         sessionStorage.setItem("userInfo", JSON.stringify(newUser));
       }
-      //navigate("/");
       setIsUser(true);
       handleLoginSucess();
       handleClose();
@@ -119,7 +115,7 @@ export default function AuthFormDialog({
         },
       };
       try {
-        const { data } = await axios.post(
+        const response = await axios.post(
           "https://pokemartdb-backend.herokuapp.com/login",
           {
             email: enteredEmail,
@@ -128,9 +124,15 @@ export default function AuthFormDialog({
           },
           config
         );
-        console.log(data.headers);
+        console.log("Login response: ", response);
+        const loginUser = {
+          email: enteredEmail,
+          username: enteredUsername,
+          role: "user",
+        };
+        sessionStorage.setItem("userInfo", JSON.stringify(loginUser));
         // if (data === "Main Page, Backend running") {
-        console.log("User's logged in");
+        console.log(`User ${enteredUsername} is logged in`);
         handleLoginSucess();
         handleClose();
         // }
