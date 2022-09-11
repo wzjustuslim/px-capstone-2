@@ -20,7 +20,6 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Link from "@mui/material/Link";
 
 import AuthContext from "../contexts/auth-context";
-import { BreakfastDiningOutlined } from "@mui/icons-material";
 import CartContext from "../contexts/cart-context";
 
 const pages = ["Stats"];
@@ -43,8 +42,8 @@ const ResponsiveAppBar = ({
   const authCtx = React.useContext(AuthContext);
   const cartCtx = React.useContext(CartContext);
   const noOfItemsInCart = cartCtx.items.reduce((curr, item) => {
-    return curr + item.qty
-  }, 0)
+    return curr + item.qty;
+  }, 0);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -59,10 +58,8 @@ const ResponsiveAppBar = ({
     setAnchorElNav(null);
   };
 
-  
-
   const handleCloseUserMenu = (setting) => {
-    console.log("im running", setting);
+    // console.log("im running", setting);
     switch (setting) {
       case "Log in":
         setAuthType("login");
@@ -252,44 +249,40 @@ const ResponsiveAppBar = ({
                   ))}
             </Menu>
           </Box>
-          {authCtx.isLoggedIn ? (
-            <>
-              <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title='Wallet'>
-                  <IconButton sx={{ p: 2 }}>
-                    <AccountBalanceWalletIcon
-                      fontSize='large'
-                      sx={{ color: "white" }}
-                    />
-                    <CurrencyBitcoinIcon
-                      fontSize='small'
-                      sx={{ color: "white" }}
-                    />
-                    <Typography textAlign='center' sx={{ color: "white" }}>
-                      {userWalletBalance}
-                    </Typography>
-                  </IconButton>
-                </Tooltip>
-              </Box>
-              <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title='Cart'>
-                  <IconButton
-                    onClick={toggleDrawer("right", true)}
-                    sx={{ p: 0 }}>
-                    <ShoppingCartOutlinedIcon
-                      fontSize='large'
-                      sx={{ color: "white" }}
-                    />
-                    <Typography textAlign='center' sx={{ color: "white" }}>
-                      {noOfItemsInCart}
-                    </Typography>
-                  </IconButton>
-                </Tooltip>
-              </Box>
-            </>
-          ) : (
-            console.log("ctx.isLoggedIn is false")
+          {authCtx.isLoggedIn && (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title='Wallet'>
+                <IconButton sx={{ p: 2 }}>
+                  <AccountBalanceWalletIcon
+                    fontSize='large'
+                    sx={{ color: "white" }}
+                  />
+                  <CurrencyBitcoinIcon
+                    fontSize='small'
+                    sx={{ color: "white" }}
+                  />
+                  <Typography textAlign='center' sx={{ color: "white" }}>
+                    {userWalletBalance}
+                  </Typography>
+                </IconButton>
+              </Tooltip>
+            </Box>
           )}
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title='Cart'>
+              <IconButton onClick={toggleDrawer("right", true)} sx={{ p: 0 }}>
+                <ShoppingCartOutlinedIcon
+                  fontSize='large'
+                  sx={{ color: "white" }}
+                />
+                {authCtx.isLoggedIn && (
+                  <Typography textAlign='center' sx={{ color: "white" }}>
+                    {noOfItemsInCart}
+                  </Typography>
+                )}
+              </IconButton>
+            </Tooltip>
+          </Box>
         </Toolbar>
       </Container>
     </AppBar>

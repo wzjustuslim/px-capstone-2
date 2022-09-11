@@ -24,7 +24,6 @@ function App() {
   // is user
   const [isUser, setIsUser] = React.useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [noOfItemsInCart, setNoOfItemsInCart] = React.useState(0);
   // check if authenticated
   const authCtx = React.useContext(AuthContext);
 
@@ -75,6 +74,8 @@ function App() {
           <TemporaryDrawer
             drawerState={drawerState}
             toggleDrawer={toggleDrawer}
+            handleClickOpen={handleClickOpen}
+            setAuthType={setAuthType}
           />
           <AuthFormDialog
             open={open}
