@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+#Environment variables might need to gitignore later
+#.env
+
 # testing
 /coverage
 
