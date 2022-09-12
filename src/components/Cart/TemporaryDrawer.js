@@ -12,9 +12,9 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 
-import CartContext from "../contexts/cart-context";
-import { Avatar } from "@mui/material";
-import AuthContext from "../contexts/auth-context";
+import CartContext from "../../contexts/cart-context";
+import CartItem from "../Cart/CartItem";
+import AuthContext from "../../contexts/auth-context";
 
 // const menuList = [
 //   {
@@ -37,6 +37,9 @@ export default function TemporaryDrawer({
   const cartCtx = useContext(CartContext);
   const authCtx = useContext(AuthContext);
 
+  const totalAmount = `$${cartCtx.totalAmount.toFixed(0)}`;
+  const hasItems = cartCtx.items.length > 0;
+
   const handleCloseUserMenu = (setting) => {
     // console.log("im running", setting);
     switch (setting) {
@@ -54,6 +57,13 @@ export default function TemporaryDrawer({
         break;
     }
   };
+
+  const cartItemAddHandler = (item) => {
+
+  }
+  const cartItemRemoveHandler = (id) => {
+
+  }
 
   const list = (anchor) => (
     <Box
@@ -81,47 +91,70 @@ export default function TemporaryDrawer({
           <Divider />
           <List>
             {cartCtx.items.map((item) => (
-              <ListItem key={item.id} disablePadding>
-                <ListItemButton>
-                  <Avatar alt={item.name} src={item.image} variant='square' />
-                  <ListItemText primary={"x" + item.qty + "\t" + item.name} />
-                  <ListItemText
-                    primary={item.price}
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row-reverse",
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
+              <CartItem
+                key={item.id}
+                name={item.name}
+                price={item.price}
+                image={item.image}
+                qty={item.qty}
+                amount={totalAmount}
+                onAdd={cartItemAddHandler.bind(null,item.id)}
+                onRemove={cartItemRemoveHandler(null,item)}
+              />
             ))}
           </List>
           <Divider />
+          {hasItems && (
+            <Button
+              // component={}
+              to={`#`}
+              variant='contained'
+              size='large'
+              sx={{
+                px: 2,
+                py: 2,
+                borderRadius: 3,
+                display: "flex",
+                margin: "0rem 3rem",
+              }}>
+              Order
+            </Button>
+          )}
           <Button
-            // component={}
-            to={`#`}
-            variant='contained'
-            size='large'
-            sx={{
-              px: 2,
-              py: 2,
-              borderRadius: 3,
-              display: "flex",
-              margin: "0rem 3rem",
-            }}>
-            Order
-          </Button>
+              // component={}
+              to={`#`}
+              variant='contained'
+              size='large'
+              sx={{
+                px: 2,
+                py: 2,
+                borderRadius: 3,
+                display: "flex",
+                alignItems: "flex-end",
+                margin: "0rem 3rem",
+              }}>
+              Close
+            </Button>
         </>
       )}
       {!authCtx.isLoggedIn && (
         <>
-          <Typography variant='h2' sx={{margin:"3rem"}}>Hi Guest User</Typography>
-          <Typography variant='h4' sx={{margin:"3rem"}}>Please Sign up or Login to start buying items from store</Typography>
-          <Box sx={{ display: "flex", justifyContent:"space-evenly", margin:"3rem"}}>
+          <Typography variant='h2' sx={{ margin: "3rem" }}>
+            Hi Guest User
+          </Typography>
+          <Typography variant='h4' sx={{ margin: "3rem" }}>
+            Please Sign up or Login to start buying items from store
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-evenly",
+              margin: "3rem",
+            }}>
             <Button
               variant='outlined'
               size='large'
-              sx={{marginInline:"1rem"}}
+              sx={{ marginInline: "1rem" }}
               onClick={() => handleCloseUserMenu("Sign up")}>
               Sign Up
             </Button>

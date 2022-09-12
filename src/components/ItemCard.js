@@ -40,8 +40,8 @@ export default function ItemCard({
 
   const addToCartHandler = (e) => {
     e.preventDefault();
-    console.log(qtyItemRef);
-    console.log(qtyItemRef.current.value);
+    // console.log(qtyItemRef);
+    // console.log(qtyItemRef.current.value);
     const enteredQty = qtyItemRef.current.value;
     const enteredQtyNum = +enteredQty;
 
@@ -55,7 +55,6 @@ export default function ItemCard({
 
   return (
     <Card sx={{ borderRadius: 3 }}>
-      <CardActionArea disableRipple>
         <CardMedia
           className='item-img'
           component='img'
@@ -112,7 +111,6 @@ export default function ItemCard({
             )}
           </Box>
         </CardContent>
-      </CardActionArea>
     </Card>
   );
 }
