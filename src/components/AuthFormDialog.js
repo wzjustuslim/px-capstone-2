@@ -52,8 +52,8 @@ export default function AuthFormDialog({
       return setError("Passwords do not match!");
     }
     // clear session store
-    if (sessionStorage.getItem("userInfo"))
-      sessionStorage.removeItem("userInfo");
+    if (sessionStorage.getItem("authToken"))
+      sessionStorage.removeItem("authToken");
 
     // post new user into db
     const config = {
@@ -67,14 +67,11 @@ export default function AuthFormDialog({
       password: newPassword,
     };
     try {
-      const { data } = await axios.post(
-        "https://pokemartdb-backend.herokuapp.com/register",
-        body,
-        config
-      );
+      const url = `${process.env.REACT_APP_BACKEND_URL}/register`;
+      const { data } = await axios.post(url, body, config);
 
       if (authCtx.isUseBackend) {
-        sessionStorage.setItem("userInfo", JSON.stringify(data));
+        sessionStorage.setItem("authToken", data.token);
         console.log(
           "Successfully created account! Response from backend:",
           data
@@ -84,7 +81,7 @@ export default function AuthFormDialog({
           email: newEmail,
           role: "user",
         };
-        sessionStorage.setItem("userInfo", JSON.stringify(newUser));
+        sessionStorage.setItem("authToken", JSON.stringify(newUser));
       }
       setIsUser(true);
       handleLoginSucess();
@@ -103,7 +100,7 @@ export default function AuthFormDialog({
     e.preventDefault();
     setIsUser(true);
     // check sessionStorage if user is already saved as authenticated user
-    if (sessionStorage.getItem("userInfo") === "Main Page, Backend running") {
+    if (sessionStorage.getItem("authToken")) {
       setIsUser(true);
       handleLoginSucess();
       handleClose();
@@ -115,8 +112,9 @@ export default function AuthFormDialog({
         },
       };
       try {
+        const url = `${process.env.REACT_APP_BACKEND_URL}/login`;
         const response = await axios.post(
-          "https://pokemartdb-backend.herokuapp.com/login",
+          url,
           {
             email: enteredEmail,
             username: enteredUsername,
@@ -130,14 +128,14 @@ export default function AuthFormDialog({
           username: enteredUsername,
           role: "user",
         };
-        sessionStorage.setItem("userInfo", JSON.stringify(loginUser));
+        sessionStorage.setItem("authToken", JSON.stringify(loginUser));
         // if (data === "Main Page, Backend running") {
         console.log(`User ${enteredUsername} is logged in`);
         handleLoginSucess();
         handleClose();
         // }
       } catch (error) {
-        sessionStorage.removeItem("userInfo");
+        sessionStorage.removeItem("authToken");
         setError("Username password combination is wrong, please try again.");
       }
       // show log in successful screen

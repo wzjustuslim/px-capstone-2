@@ -3,12 +3,8 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import CardMedia from "@mui/material/CardMedia";
-import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseline";
-import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import ItemCard from "../components/ItemCard";
+import CatchingPokemonTwoToneIcon from "@mui/icons-material/CatchingPokemonTwoTone";
 import CategoryTagsPageItemSection from "../components/CategoryTagsPageItemSection";
 import Img from "../static/images/pokeball-card.jpg";
 
@@ -76,14 +72,20 @@ export default function CategoryTagsPage() {
 
   const usingBackend = true;
 
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${sessionStorage.getItem("authToken")}`
+    },
+  };
   useEffect(() => {
     const getAllItemsFromDB = async () => {
       setLoading(true);
       if (usingBackend) {
         try {
-          const url = "https://pokemartdb-backend.herokuapp.com/api/items";
-          const res = await axios.get(url);
-          // const res = await axios.get('https://pokeapi.co/api/v2/item-category/loot')
+      const url = `${process.env.REACT_APP_BACKEND_URL}/api/items`;
+      // const url = "https://pokemartdb-backend.herokuapp.com/api/items";
+          const res = await axios.get(url, config);
           if (res.data.success) {
             const transformedItems = res.data.data.map((pokeItems) => {
               return {
@@ -125,7 +127,7 @@ export default function CategoryTagsPage() {
   //filter to selected category
   useEffect(() => {
     loading
-      ? console.log('Loading items from DB')
+      ? console.log("Loading items from DB")
       : setCategoryItems(
           allPokeItems.filter((items) => items.itemCategory === category)
         );
@@ -184,8 +186,12 @@ export default function CategoryTagsPage() {
             }}></Box>
         </section>
         <section>
+          {loading && (
+            <div id='container'>
+              <div id='pokeball'></div>
+            </div>
+          )}
           {!loading && <CategoryTagsPageItemSection items={categoryItems} />}
-          {loading && <div className='loading-spinner'></div>}
         </section>
       </main>
     </>
