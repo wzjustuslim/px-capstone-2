@@ -22,7 +22,7 @@ const CategorySection = ({ categories }) => {
               sx={{
                 fontWeight: 700,
               }}>
-              Browse by category
+              Browse by popular categories
             </Typography>
           </Box>
         </Grid>

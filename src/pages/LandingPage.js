@@ -19,42 +19,32 @@ import Img from "../static/images/pokeball-card.jpg";
 
 import "../components/spinner.css";
 
-const mockCategory = [
-  {
-    categoryName:'healing',
-    categoryImg:'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/max-potion.png'
-  },
-  {
-    categoryName:'Ice Heal',
-    categoryImg:'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/ice-heal.png'
-  },
-]
+const popularCategories = [
+  { name: "healing" },
+  { name: "spelunking" },
+  { name: "standard-balls" },
+];
 
 const LandingPage = () => {
   // pokeAPI method
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
-  const usingBackend = true;
 
   useEffect(() => {
     const getCategoriesFromPokeapi = async () => {
       setLoading(true);
       try {
-        const url = `https://pokeapi.co/api/v2/item-category/?limit=50`;
-        const { data: response } = await axios.get(url);
+        // const url = `https://pokeapi.co/api/v2/item-category/?offset=0&limit=50`;
+        // const { data: response } = await axios.get(url);
         // console.log(response.results);
-        setCategories(response.results);
+        // setCategories(response.results);
+        setCategories(popularCategories);
       } catch (error) {
         console.error(error.message);
       }
       setLoading(false);
     };
-    const getMockCategory = () => {
-      setCategories(mockCategory)
-    }
-    usingBackend 
-    ? getCategoriesFromPokeapi()
-    : getMockCategory();
+    getCategoriesFromPokeapi();
   }, []);
   // sorting from db
 
