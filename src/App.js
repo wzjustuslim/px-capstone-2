@@ -1,9 +1,9 @@
 import logo from "./logo.svg";
 import "./App.css";
 import * as React from "react";
-import { Navigate, Routes, Route, useNavigate } from "react-router-dom";
+import { Navigate, Routes, Route } from "react-router-dom";
 import ResponsiveAppBar from "./components/ResponsiveAppBar.js";
-import TemporaryDrawer from "./components/TemporaryDrawer.js";
+import TemporaryDrawer from "./components/Cart/TemporaryDrawer.js";
 import AuthFormDialog from "./components/AuthFormDialog.js";
 import LandingPage from "./pages/LandingPage.js";
 import ProfilePage from "./pages/ProfilePage.js";
@@ -12,6 +12,7 @@ import ExplorePage from "./pages/ExplorePage.js";
 import CategoryTagsPage from "./pages/CategoryTagsPage.js";
 import AuthContext from "./contexts/auth-context";
 import CartProvider from "./contexts/CartProvider";
+import AdminPage from "./pages/AdminPage";
 
 function App() {
   //#region Declare UI elements
@@ -59,6 +60,7 @@ function App() {
     <AuthContext.Provider
       value={{
         isLoggedIn: isLoggedIn,
+        isUseBackend: true
       }}>
       <CartProvider>
         <div className='App'>
@@ -87,6 +89,7 @@ function App() {
           />
           <Routes>
             <Route path='/' exact element={<LandingPage />} />
+            <Route path='/' exact element={<AdminPage />} />
             <Route path='/profile' element={<ProfilePage />} />
             <Route path='/explore' element={<ExplorePage />} />
             {/* <Route path="/categories/:category" exact element={<CategorySideDrawerPage />} /> */}
