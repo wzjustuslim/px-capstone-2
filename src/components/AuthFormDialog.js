@@ -70,7 +70,9 @@ export default function AuthFormDialog({
       const url = `${process.env.REACT_APP_BACKEND_URL}/register`;
       const { data } = await axios.post(url, body, config);
 
-      if (authCtx.isUseBackend) {
+      console.log(authCtx.isUseBackend);
+      if (authCtx.isUseBackend && data.success) {
+        // using JWT token
         sessionStorage.setItem("authToken", data.token);
         console.log(
           "Successfully created account! Response from backend:",
@@ -127,6 +129,7 @@ export default function AuthFormDialog({
           email: enteredEmail,
           username: enteredUsername,
           role: "user",
+          token: response.data.token,
         };
         sessionStorage.setItem("authToken", JSON.stringify(loginUser));
         // if (data === "Main Page, Backend running") {
