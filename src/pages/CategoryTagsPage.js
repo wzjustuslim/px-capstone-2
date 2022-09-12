@@ -8,7 +8,7 @@ import CatchingPokemonTwoToneIcon from "@mui/icons-material/CatchingPokemonTwoTo
 import CategoryTagsPageItemSection from "../components/CategoryTagsPageItemSection";
 import Img from "../static/images/pokeball-card.jpg";
 
-import "../components/spinner.css";
+import "../components/loading.css";
 import toProper from "../helper/toProper";
 
 const splashImageUrl = `../static/images/hero-image.jpg`;
@@ -141,7 +141,7 @@ export default function CategoryTagsPage() {
             component='div'
             sx={{
               bgcolor: "#cfe2fc",
-              height: "15rem",
+              height: "10rem",
               display: "flex",
               alignItems: "flex-end",
             }}></Box>
@@ -187,8 +187,8 @@ export default function CategoryTagsPage() {
         </section>
         <section>
           {loading && (
-            <div id='container'>
-              <div id='pokeball'></div>
+            <div className='container'>
+              <div className='pokeball'></div>
             </div>
           )}
           {!loading && <CategoryTagsPageItemSection items={categoryItems} />}

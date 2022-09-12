@@ -1,11 +1,11 @@
 .container{
   margin:0;
   padding:0;
-  height: 100vh;
+  height: 50vh;
   width: 100vw;
   display: flex;
-  align-items: end;
-/*   align-items: center; */
+  /* align-items: end; */
+  align-items: center;
   justify-content:center;
 }
 
@@ -31,6 +31,7 @@
   width:250px;
   background-color: #383b4f;
   top:112.5px;
+  right:0px;
 }
 
 .pokeball::after{

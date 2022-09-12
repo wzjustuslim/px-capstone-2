@@ -17,7 +17,7 @@ import Footer from "../components/Footer.js";
 import { Link as RouterLink } from "react-router-dom";
 import Img from "../static/images/pokeball-card.jpg";
 
-import "../components/spinner.css";
+import "../components/loading.css";
 
 const popularCategories = [
   { name: "healing" },
