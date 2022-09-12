@@ -89,7 +89,7 @@ function App() {
           />
           <Routes>
             <Route path='/' exact element={<LandingPage />} />
-            <Route path='/' exact element={<AdminPage />} />
+            <Route path='/admin' exact element={<AdminPage />} />
             <Route path='/profile' element={<ProfilePage />} />
             <Route path='/explore' element={<ExplorePage />} />
             {/* <Route path="/categories/:category" exact element={<CategorySideDrawerPage />} /> */}
