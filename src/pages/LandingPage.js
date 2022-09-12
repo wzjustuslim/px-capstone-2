@@ -31,7 +31,7 @@ const LandingPage = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    const getCategoriesFromPokeapi = async () => {
+    const getPopularCategories = async () => {
       setLoading(true);
       try {
         // const url = `https://pokeapi.co/api/v2/item-category/?offset=0&limit=50`;
@@ -44,7 +44,7 @@ const LandingPage = () => {
       }
       setLoading(false);
     };
-    getCategoriesFromPokeapi();
+    getPopularCategories();
   }, []);
   // sorting from db
 
