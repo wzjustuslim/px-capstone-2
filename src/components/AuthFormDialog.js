@@ -102,51 +102,35 @@ export default function AuthFormDialog({
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsUser(true);
-    // check sessionStorage if user is already saved as authenticated user
-    if (sessionStorage.getItem("authToken")) {
-      setIsUser(true);
-      handleLoginSucess();
-      handleClose();
-    } else {
-      // post new user into db
+
+    
+    try {
+      const url = `${process.env.REACT_APP_BACKEND_URL}/login`;
+      const body = { username: enteredUsername, password: enteredPassword }
       const config = {
         headers: {
           "Content-type": "application/json",
         },
+        withCredentials: true
       };
-      try {
-        const url = `${process.env.REACT_APP_BACKEND_URL}/login`;
-        const data = await axios.post(
-          url,
-          {
-            // email: enteredEmail,
-            username: enteredUsername,
-            password: enteredPassword,
-          },
-          config
-        );
-        console.log("Login response: ", data);
-        setUserContext(oldValues => {
-          return { ...oldValues, token: data.token }
-        })
-        const loginUser = {
-          // email: enteredEmail,
-          username: enteredUsername,
-          role: "user",
-          token: data.token,
-        };
-        // sessionStorage.setItem("authToken", JSON.stringify(loginUser));
-        // if (data === "Main Page, Backend running") {
-        console.log(`User ${enteredUsername} is logged in`);
-        handleLoginSucess();
-        handleClose();
-        // }
-      } catch (error) {
-        // sessionStorage.removeItem("authToken");
-        setError("Username password combination is wrong, please try again.");
-      }
-      // show log in successful screen
+      const data = await axios.post(
+        url,
+        body,
+        config
+      );
+      console.log("Login response: ", data);
+      setUserContext(oldValues => {
+        return { ...oldValues, token: data.token }
+      })
+      console.log(`User Context: ${JSON.stringify(userContext)}`)
+      console.log(`User ${enteredUsername} is logged in`);
+      handleLoginSucess();
+      handleClose();
+      // }
+    } catch (error) {
+      setError("Username password combination is wrong, please try again.");
     }
+   
   };
 
   return (

@@ -13,6 +13,8 @@ import CategoryTagsPage from "./pages/CategoryTagsPage.js";
 import AuthContext from "./contexts/auth-context";
 import CartProvider from "./contexts/CartProvider";
 import AdminPage from "./pages/AdminPage";
+import { UserContext } from "./contexts/UserContext"
+import axios from "axios";
 
 function App() {
   //#region Declare UI elements
@@ -27,6 +29,8 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   // check if authenticated
   const authCtx = React.useContext(AuthContext);
+
+  const [userContext, setUserContext] = React.useContext(UserContext)
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -50,10 +54,35 @@ function App() {
     setIsLoggedIn(true);
   };
 
+  const verifyUser = React.useCallback(() => {
+    const url = `${process.env.REACT_APP_BACKEND_URL}/refreshToken`;
+    const config = {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+    };
+    fetch(url,config).then(async response => {
+      if(response.ok) {
+        const data = await response.json();
+        setUserContext(oldValues => {
+          return { ...oldValues, token: data.token }
+        })
+      } else {
+        setUserContext(oldValues => {
+          return { ...oldValues, token: null }
+        })
+      }
+      setTimeout(verifyUser, 1000 * 60 * 5)
+    })
+  }, [setUserContext])
+
+  React.useEffect(() => {
+    verifyUser()
+  },[verifyUser])
   //#endregion
 
   React.useEffect(() => {
-    authCtx.isLoggedIn ? setIsUser(true) : setIsUser(false);
+    userContext.token ? setIsUser(true) : setIsUser(false);
   }, [isUser, authCtx]);
 
   return (
