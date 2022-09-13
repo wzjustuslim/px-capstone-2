@@ -58,12 +58,8 @@ export default function TemporaryDrawer({
     }
   };
 
-  const cartItemAddHandler = (item) => {
-
-  }
-  const cartItemRemoveHandler = (id) => {
-
-  }
+  const cartItemAddHandler = (item) => {};
+  const cartItemRemoveHandler = (id) => {};
 
   const list = (anchor) => (
     <Box
@@ -77,10 +73,10 @@ export default function TemporaryDrawer({
             <Typography
               variant='subtitle2'
               sx={{ ml: "1rem", fontWeight: 700 }}>
-              Qty
+              Item
             </Typography>
             <Typography sx={{ fontWeight: 700 }} variant='subtitle2'>
-              Item
+              Quantity
             </Typography>
             <Typography
               variant='subtitle2'
@@ -98,13 +94,29 @@ export default function TemporaryDrawer({
                 image={item.image}
                 qty={item.qty}
                 amount={totalAmount}
-                onAdd={cartItemAddHandler.bind(null,item.id)}
-                onRemove={cartItemRemoveHandler(null,item)}
+                onAdd={cartItemAddHandler.bind(null, item.id)}
+                onRemove={cartItemRemoveHandler(null, item)}
               />
             ))}
           </List>
           <Divider />
-          {hasItems && (
+          <Box sx={{ mt:"2rem", display: "flex", justifyContent:"space-around" }}>
+            {hasItems && (
+              <Button
+                // component={}
+                to={`#`}
+                variant='contained'
+                size='large'
+                sx={{
+                  px: 2,
+                  py: 2,
+                  borderRadius: "2rem",
+                  display: "flex",
+                  padding: "1rem 2rem",
+                }}>
+                Order
+              </Button>
+            )}
             <Button
               // component={}
               to={`#`}
@@ -113,28 +125,14 @@ export default function TemporaryDrawer({
               sx={{
                 px: 2,
                 py: 2,
-                borderRadius: 3,
-                display: "flex",
-                margin: "0rem 3rem",
-              }}>
-              Order
-            </Button>
-          )}
-          <Button
-              // component={}
-              to={`#`}
-              variant='contained'
-              size='large'
-              sx={{
-                px: 2,
-                py: 2,
-                borderRadius: 3,
+                borderRadius: "2rem",
                 display: "flex",
                 alignItems: "flex-end",
-                margin: "0rem 3rem",
+                padding: "1rem 2rem",
               }}>
               Close
             </Button>
+          </Box>
         </>
       )}
       {!authCtx.isLoggedIn && (
