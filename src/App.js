@@ -91,6 +91,8 @@ function App() {
               drawerState={drawerState}
               toggleDrawer={toggleDrawer}
               handleClickOpen={handleClickOpen}
+              walletAmount={walletAmount}
+              setWalletAmount={setWalletAmount}
               setAuthType={setAuthType}
             />
             <AuthFormDialog

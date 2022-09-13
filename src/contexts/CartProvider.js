@@ -34,7 +34,7 @@ const cartReducer = (state, action) => {
     };
   }
   else if (action.type === "REMOVE") {
-    console.log("Removing item")
+    console.log("Removing item:"+action.item)
     const existingCartItemIndex = state.items.findIndex(
       (item) => item.id === action.id
     );
@@ -77,7 +77,6 @@ const CartProvider = (props) => {
     });
   };
   const removeItemFromCartHandler = (id) => {
-  console.log("WHO CALLED ME?")
     dispatchCartAction({
       type: "REMOVE",
       id: id,

@@ -33,6 +33,8 @@ export default function TemporaryDrawer({
   toggleDrawer,
   handleClickOpen,
   setAuthType,
+  walletAmount,
+  setWalletAmount,
 }) {
   const cartCtx = useContext(CartContext);
   const authCtx = useContext(AuthContext);
@@ -65,6 +67,16 @@ export default function TemporaryDrawer({
   const cartItemAddHandler = (item) => {
     cartCtx.addItem({ ...item, amount: 1 });
   };
+
+  const deductWalletHandler = (id) => {
+    console.log("wallet:"+walletAmount)
+    console.log("cartamount:"+totalAmount)
+    if (walletAmount > totalAmount) {
+      setWalletAmount(totalAmount - walletAmount);
+      cartItemRemoveHandler(cartCtx.items.map((item) => item));
+    }
+  };
+
   const list = (anchor) => (
     <Box sx={{ width: 450 }} role='presentation'>
       {authCtx.isLoggedIn && (
@@ -118,7 +130,7 @@ export default function TemporaryDrawer({
               }}>
               {hasItems && (
                 <Button
-                  onClick={toggleDrawer(anchor, false)}
+                  onClick={deductWalletHandler}
                   variant='contained'
                   size='large'
                   sx={{
