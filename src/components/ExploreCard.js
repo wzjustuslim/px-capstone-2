@@ -11,7 +11,7 @@ import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 
 import toProper from "../helper/toProper";
 import CartContext from "../contexts/cart-context";
-export default function ExploreCard({ item }) {
+export default function ExploreCard({ item, toggleDrawer }) {
   const { _id, itemImage, itemName, itemPrice } = item;
   // const qtyItemRef = useRef();
   const cartCtx = useContext(CartContext);
@@ -50,7 +50,7 @@ export default function ExploreCard({ item }) {
         sx={{
           borderRadius: "12px",
         }}>
-        <CardActionArea onClick={addToCartHandler}>
+        <CardActionArea onClick={toggleDrawer("right", true, item)}>
           <CardContent sx={{ pb: 1 }}>
             <Box
               sx={{
@@ -95,7 +95,7 @@ export default function ExploreCard({ item }) {
               </Box>
             </Box>
           </CardContent>
-          {false ? (
+          {true ? (
             <CardActions
               className='explore-card-actions'
               sx={{

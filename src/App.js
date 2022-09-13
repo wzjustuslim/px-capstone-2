@@ -28,7 +28,10 @@ function App() {
   // check if authenticated
   const authCtx = React.useContext(AuthContext);
 
-  const toggleDrawer = (anchor, open) => (event) => {
+  const [cartState, setCartState] = React.useState([]);
+
+  const toggleDrawer = (anchor, open, item) => (event) => {
+    console.log('toggleDrawer')
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
@@ -37,6 +40,12 @@ function App() {
     }
 
     setDrawerState({ ...drawerState, [anchor]: open });
+
+    if (item) {
+      const cloneCart = [...cartState]
+      cloneCart.push({...item, itemQty: 1 })
+      setCartState(cloneCart)
+    }  
   };
 
   const handleClickOpen = () => {
@@ -72,12 +81,15 @@ function App() {
             toggleDrawer={toggleDrawer}
             handleClickOpen={handleClickOpen}
             setAuthType={setAuthType}
+            cartState={cartState}
           />
           <TemporaryDrawer
             drawerState={drawerState}
             toggleDrawer={toggleDrawer}
             handleClickOpen={handleClickOpen}
             setAuthType={setAuthType}
+            cartState={cartState}
+            setCartState={setCartState}
           />
           <AuthFormDialog
             open={open}
@@ -91,7 +103,7 @@ function App() {
             <Route path='/' exact element={<LandingPage />} />
             <Route path='/admin' exact element={<AdminPage />} />
             <Route path='/profile' element={<ProfilePage />} />
-            <Route path='/explore' element={<ExplorePage />} />
+            <Route path='/explore' element={<ExplorePage toggleDrawer={toggleDrawer} />} />
             {/* <Route path="/categories/:category" exact element={<CategorySideDrawerPage />} /> */}
             <Route
               path='/categories/:category'

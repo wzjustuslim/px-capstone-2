@@ -35,6 +35,7 @@ const ResponsiveAppBar = ({
   toggleDrawer,
   handleClickOpen,
   setAuthType,
+  cartState,
 }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -44,9 +45,11 @@ const ResponsiveAppBar = ({
 
   const authCtx = React.useContext(AuthContext);
   const cartCtx = React.useContext(CartContext);
-  const noOfItemsInCart = cartCtx.items.reduce((curr, item) => {
-    return curr + item.qty;
-  }, 0);
+  // const noOfItemsInCart = cartCtx.items.reduce((curr, item) => {
+  //   return curr + item.qty;
+  // }, 0);
+
+  const noOfItemsInCart = cartState.length
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);

@@ -11,6 +11,9 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 
 import CartContext from "../../contexts/cart-context";
 import CartItem from "../Cart/CartItem";
@@ -33,6 +36,8 @@ export default function TemporaryDrawer({
   toggleDrawer,
   handleClickOpen,
   setAuthType,
+  cartState,
+  setCartState,
 }) {
   const cartCtx = useContext(CartContext);
   const authCtx = useContext(AuthContext);
@@ -69,73 +74,65 @@ export default function TemporaryDrawer({
     <Box
       sx={{ width: 450 }}
       role='presentation'
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}>
+      // onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
       {authCtx.isLoggedIn && (
-        <>
-          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography
-              variant='subtitle2'
-              sx={{ ml: "1rem", fontWeight: 700 }}>
-              Qty
-            </Typography>
-            <Typography sx={{ fontWeight: 700 }} variant='subtitle2'>
-              Item
-            </Typography>
-            <Typography
-              variant='subtitle2'
-              sx={{ mr: "1rem", fontWeight: 700 }}>
-              Amount
-            </Typography>
+        <Box>
+          <Box>
+            <List>
+              {cartState.map((item, index) => (
+                <React.Fragment key={index}>
+                  <ListItem
+                    secondaryAction={
+                      <>
+                        <Button
+                          onClick={() => {
+                            item.itemQty++
+                            setCartState([...cartState])
+                          }}
+                          sx={{ mr: 3 }}
+                          size="small"
+                          variant="outlined"
+                        >
+                          +
+                        </Button>
+                          {item.itemQty}
+                        <Button
+                          onClick={() => {
+                            item.itemQty--
+                            if (!item.itemQty) {
+                              cartState.splice(index, 1)
+                            }
+                            setCartState([...cartState])
+                          }}
+                          sx={{ ml: 3 }}
+                          size="small"
+                          variant="outlined"
+                        >
+                          -
+                        </Button>
+                      </>
+                    }
+                  >
+                    <ListItemAvatar>
+                      <Avatar alt="" src={item.itemImage} />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={item.itemName}
+                      secondary={<><Box sx={{ display: 'flex' }}><CurrencyBitcoinIcon /><Typography>{item.itemPrice * item.itemQty}</Typography></Box></>}
+                    />
+                  </ListItem>
+                  <Divider />
+                </React.Fragment>
+              ))}
+            </List>
           </Box>
-          <Divider />
-          <List>
-            {cartCtx.items.map((item) => (
-              <CartItem
-                key={item.id}
-                name={item.name}
-                price={item.price}
-                image={item.image}
-                qty={item.qty}
-                amount={totalAmount}
-                onAdd={cartItemAddHandler.bind(null,item.id)}
-                onRemove={cartItemRemoveHandler(null,item)}
-              />
-            ))}
-          </List>
-          <Divider />
-          {hasItems && (
-            <Button
-              // component={}
-              to={`#`}
-              variant='contained'
-              size='large'
-              sx={{
-                px: 2,
-                py: 2,
-                borderRadius: 3,
-                display: "flex",
-                margin: "0rem 3rem",
-              }}>
-              Order
-            </Button>
-          )}
-          <Button
-              // component={}
-              to={`#`}
-              variant='contained'
-              size='large'
-              sx={{
-                px: 2,
-                py: 2,
-                borderRadius: 3,
-                display: "flex",
-                alignItems: "flex-end",
-                margin: "0rem 3rem",
-              }}>
-              Close
-            </Button>
-        </>
+          <Box sx={{ p: 1 }}>
+            <Button sx={{ mr: 1 }} variant="contained">Buy</Button>
+            <Button onClick={() => setCartState([])}>Clear</Button>
+          </Box>
+        </Box>
       )}
       {!authCtx.isLoggedIn && (
         <>

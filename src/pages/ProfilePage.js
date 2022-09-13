@@ -55,7 +55,7 @@ const ProfilePage = () => {
                       color: "text.secondary"
                     }}
                   >
-                    Justus Lim
+                    John Doe
                   </Typography>
                 </Box>
               </AccordionSummary>
@@ -63,7 +63,7 @@ const ProfilePage = () => {
                 <Box component="form">
                   <TextField
                     name="name"
-                    value="Justus Lim"
+                    value="John Doe"
                     label="Full Name"
                     margin="normal"
                     type="text"
@@ -105,7 +105,7 @@ const ProfilePage = () => {
                       color: "text.secondary"
                     }}
                   >
-                    w****m@gmail.com
+                    j****e@gmail.com
                   </Typography>
                 </Box>
               </AccordionSummary>
@@ -113,7 +113,7 @@ const ProfilePage = () => {
                 <Box component="form">
                   <TextField
                     name="email"
-                    value="weizhengjustus.lim@gmail.com"
+                    value="john_doe@gmail.com"
                     label="Email Address"
                     margin="normal"
                     type="email"

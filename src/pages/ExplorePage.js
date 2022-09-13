@@ -8,13 +8,15 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Chip from "@mui/material/Chip";
 // import ListItem from '@mui/material/ListItem';
 import Paper from "@mui/material/Paper";
+import Button from '@mui/material/Button';
+
 
 import ExploreCard from "../components/ExploreCard.js";
 import '../components/loading.css'
 import Banner from "../static/images/explore-banner1.jpg";
 import Pokeball from "../static/images/pokeball-card.jpg";
 
-const ExplorePage = () => {
+const ExplorePage = ({ toggleDrawer }) => {
   const [items, setItems] = useState([]);
   const [displayItems, setDisplayItems] = useState([]);
   const [displayCategories, setDisplayCategories] = useState([]);
@@ -167,7 +169,7 @@ const ExplorePage = () => {
                   <ExploreCard
                     key={index}
                     item={item}
-                    displayCategories={displayCategories}
+                    toggleDrawer={toggleDrawer}
                   />
                 ))
               )}
