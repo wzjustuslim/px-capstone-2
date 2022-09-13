@@ -14,6 +14,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 import AuthContext from "../contexts/auth-context";
+import { UserContext } from "../contexts/UserContext"
 
 export default function AuthFormDialog({
   open,
@@ -32,7 +33,7 @@ export default function AuthFormDialog({
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredUsername, setEnteredUsername] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
-
+  const [userContext, setUserContext] = useContext(UserContext)
   const authCtx = useContext(AuthContext);
 
   const handleTabs = (event, newValue) => {
@@ -115,30 +116,33 @@ export default function AuthFormDialog({
       };
       try {
         const url = `${process.env.REACT_APP_BACKEND_URL}/login`;
-        const response = await axios.post(
+        const data = await axios.post(
           url,
           {
-            email: enteredEmail,
+            // email: enteredEmail,
             username: enteredUsername,
             password: enteredPassword,
           },
           config
         );
-        console.log("Login response: ", response);
+        console.log("Login response: ", data);
+        setUserContext(oldValues => {
+          return { ...oldValues, token: data.token }
+        })
         const loginUser = {
-          email: enteredEmail,
+          // email: enteredEmail,
           username: enteredUsername,
           role: "user",
-          token: response.data.token,
+          token: data.token,
         };
-        sessionStorage.setItem("authToken", JSON.stringify(loginUser));
+        // sessionStorage.setItem("authToken", JSON.stringify(loginUser));
         // if (data === "Main Page, Backend running") {
         console.log(`User ${enteredUsername} is logged in`);
         handleLoginSucess();
         handleClose();
         // }
       } catch (error) {
-        sessionStorage.removeItem("authToken");
+        // sessionStorage.removeItem("authToken");
         setError("Username password combination is wrong, please try again.");
       }
       // show log in successful screen
@@ -235,7 +239,7 @@ export default function AuthFormDialog({
           <Box>
             {/* <DialogTitle>Log in</DialogTitle> */}
             <DialogContent>
-              <TextField
+              {/* <TextField
                 name='email'
                 label='Email Address'
                 margin='normal'
@@ -245,7 +249,7 @@ export default function AuthFormDialog({
                 required
                 value={enteredEmail}
                 onChange={(e) => setEnteredEmail(e.target.value)}
-              />
+              /> */}
               <TextField
                 name='username'
                 label='Username'
