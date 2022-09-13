@@ -35,13 +35,13 @@ const ResponsiveAppBar = ({
   toggleDrawer,
   handleClickOpen,
   setAuthType,
+  walletAmount
 }) => {
   const authCtx = React.useContext(AuthContext);
   const cartCtx = React.useContext(CartContext);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [userWalletBalance, setUserWalletBalance] = React.useState(1000);
   // state to check if user is admin 
   const [isAdmin, setIsAdmin] = React.useState(true);
 
@@ -286,7 +286,7 @@ const ResponsiveAppBar = ({
                     sx={{ color: "white" }}
                   />
                   <Typography textAlign='center' sx={{ color: "white" }}>
-                    {userWalletBalance}
+                    {walletAmount}
                   </Typography>
                 </IconButton>
               </Tooltip>

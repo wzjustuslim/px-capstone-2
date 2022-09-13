@@ -14,13 +14,14 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 import AuthContext from "../contexts/auth-context";
-import { UserContext } from "../contexts/UserContext"
+import { UserContext } from "../contexts/UserContext";
 
 export default function AuthFormDialog({
   open,
   authType,
   setAuthType,
   setIsUser,
+  setTokenState,
   handleLoginSucess,
   handleClose,
 }) {
@@ -33,7 +34,7 @@ export default function AuthFormDialog({
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredUsername, setEnteredUsername] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
-  const [userContext, setUserContext] = useContext(UserContext)
+  const [userContext, setUserContext] = useContext(UserContext);
   const authCtx = useContext(AuthContext);
 
   const handleTabs = (event, newValue) => {
@@ -70,24 +71,26 @@ export default function AuthFormDialog({
     try {
       const url = `${process.env.REACT_APP_BACKEND_URL}/register`;
       const { data } = await axios.post(url, body, config);
-
+      const newUser = {
+        email: newEmail,
+        role: "user",
+        token: data.token
+      };
       console.log(authCtx.isUseBackend);
       if (authCtx.isUseBackend && data.success) {
         // using JWT token
-        sessionStorage.setItem("authToken", data.token);
+        sessionStorage.setItem("authToken", newUser);
         console.log(
           "Successfully created account! Response from backend:",
           data
         );
       } else {
-        const newUser = {
-          email: newEmail,
-          role: "user",
-        };
+        
         sessionStorage.setItem("authToken", JSON.stringify(newUser));
       }
       setIsUser(true);
       handleLoginSucess();
+      setTokenState(sessionStorage.getItem("authToken"));
       handleClose();
     } catch (e) {
       console.log(e);
@@ -126,19 +129,20 @@ export default function AuthFormDialog({
           config
         );
         console.log("Login response: ", data);
-        setUserContext(oldValues => {
-          return { ...oldValues, token: data.token }
-        })
+        setUserContext((oldValues) => {
+          return { ...oldValues, token: data.token };
+        });
         const loginUser = {
           // email: enteredEmail,
           username: enteredUsername,
           role: "user",
-          token: data.token,
+          token: data.token
         };
+        sessionStorage.setItem("authToken", JSON.stringify(loginUser));
         // sessionStorage.setItem("authToken", JSON.stringify(loginUser));
-        // if (data === "Main Page, Backend running") {
         console.log(`User ${enteredUsername} is logged in`);
         handleLoginSucess();
+        setTokenState(sessionStorage.getItem("authToken"));
         handleClose();
         // }
       } catch (error) {
