@@ -16,11 +16,12 @@ const CartItem = ({
   id,
   name,
   price,
+  qty,
   image,
-  totalQty,
   onAddOne,
   onRemoveOne,
 }) => {
+
   return (
     <>
       <ListItem
@@ -43,8 +44,9 @@ const CartItem = ({
           }}>
           <ListItemText
             sx={{ justifyContent: "center" }}
-            primary={"   x" + totalQty}
+            primary={"   x" + qty}
           />
+          {console.log("qty: "+qty)}
           <ListItemButton
             onClick={onRemoveOne}
             sx={{
@@ -73,7 +75,7 @@ const CartItem = ({
             flexDirection: "row",
             margin: "0 1rem",
           }}>
-          <CurrencyBitcoinIcon />
+          <CurrencyBitcoinIcon />{console.log("price: "+price)}
           <ListItemText primary={price} />
         </Box>
       </ListItem>

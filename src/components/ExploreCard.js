@@ -12,6 +12,7 @@ import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import toProper from "../helper/toProper";
 import CartContext from "../contexts/cart-context";
 import AuthContext from "../contexts/auth-context";
+
 export default function ExploreCard({ toggleDrawer, item }) {
   const { _id, itemImage, itemName, itemPrice } = item;
   const [isInCart, setIsInCart] = useState(false);

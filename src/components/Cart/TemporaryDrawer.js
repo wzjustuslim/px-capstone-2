@@ -37,7 +37,7 @@ export default function TemporaryDrawer({
   const cartCtx = useContext(CartContext);
   const authCtx = useContext(AuthContext);
 
-  const totalQty = `${cartCtx.totalQty}`;
+  const totalAmount = `${cartCtx.totalAmount}`;
   const hasItems = cartCtx.items.length > 0;
 
   const handleCloseUserMenu = (setting) => {
@@ -59,9 +59,11 @@ export default function TemporaryDrawer({
   };
 
   const addOneHandler = (item) => {
-    cartCtx.addItem(...item, item.totalQty=item.totalQty+1)
+    cartCtx.addItem(...item, (item.qty = item.qty + 1));
   };
-  const removeOneHandler = (id) => {};
+  const removeOneHandler = (id) => {
+    cartCtx.removeItem(id);
+  };
 
   const list = (anchor) => (
     <Box sx={{ width: 450 }} role='presentation'>
@@ -79,7 +81,7 @@ export default function TemporaryDrawer({
             <Typography
               variant='subtitle2'
               sx={{ mr: "1rem", fontWeight: 700 }}>
-              Qty
+              Amount
             </Typography>
           </Box>
           <Divider />
@@ -87,24 +89,49 @@ export default function TemporaryDrawer({
             {cartCtx.items.map((item) => (
               <CartItem
                 key={item.id}
+                id={item.id}
                 name={item.name}
                 price={item.price}
+                qty={item.qty}
                 image={item.image}
-                totalQty={totalQty}
                 onAddOne={addOneHandler.bind(null, item)}
                 onRemoveOne={removeOneHandler(null, item.id)}
               />
             ))}
           </List>
-          <Divider />
-          <Typography component={"iuasfunaeifbna"} />
-          <Box
-            sx={{
-              mt: "2rem",
-              display: "flex",
-              justifyContent: "space-around",
-            }}>
+          <Box>
+            {!hasItems && (
+              <Typography variant='h3'>Cart has no items.</Typography>
+            )}
             {hasItems && (
+              <>
+                <Divider />
+                <Typography variant='body1' sx={{ fontWeight: 700 }}>
+                  Total Price:{totalAmount}
+                </Typography>
+              </>
+            )}
+            <Box
+              sx={{
+                mt: "2rem",
+                display: "flex",
+                justifyContent: "space-around",
+              }}>
+              {hasItems && (
+                <Button
+                  onClick={toggleDrawer(anchor, false)}
+                  variant='contained'
+                  size='large'
+                  sx={{
+                    px: 2,
+                    py: 2,
+                    borderRadius: "2rem",
+                    display: "flex",
+                    padding: "1rem 2rem",
+                  }}>
+                  Order
+                </Button>
+              )}
               <Button
                 onClick={toggleDrawer(anchor, false)}
                 variant='contained'
@@ -114,25 +141,12 @@ export default function TemporaryDrawer({
                   py: 2,
                   borderRadius: "2rem",
                   display: "flex",
+                  alignItems: "flex-end",
                   padding: "1rem 2rem",
                 }}>
-                Order
+                Close
               </Button>
-            )}
-            <Button
-                onClick={toggleDrawer(anchor, false)}
-              variant='contained'
-              size='large'
-              sx={{
-                px: 2,
-                py: 2,
-                borderRadius: "2rem",
-                display: "flex",
-                alignItems: "flex-end",
-                padding: "1rem 2rem",
-              }}>
-              Close
-            </Button>
+            </Box>
           </Box>
         </>
       )}
