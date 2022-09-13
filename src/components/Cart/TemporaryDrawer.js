@@ -92,11 +92,7 @@ export default function TemporaryDrawer({
                 id={item.id}
                 name={item.name}
                 price={item.price}
-<<<<<<< HEAD
                 qty={item.qty}
-=======
-                qty={cartCtx.qty}
->>>>>>> c6acf0c17edbc09e88c8fb1628cbe9b99c16c4ed
                 image={item.image}
                 onAddOne={addOneHandler.bind(null, item)}
                 onRemoveOne={removeOneHandler(null, item.id)}
