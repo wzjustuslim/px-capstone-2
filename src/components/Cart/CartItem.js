@@ -21,8 +21,8 @@ const CartItem = ({
   price,
   image,
   amount,
-  cartItemAddHandler,
-  cartItemRemoveHandler,
+  onAdd,
+  onRemove,
 }) => {
   /*<>
       <ListItem key={id} disablePadding>
@@ -67,7 +67,7 @@ const CartItem = ({
           />
           {console.log("qty: " + amount)}
           <ListItemButton
-            onClick={cartItemRemoveHandler}
+            onClick={onRemove}
             sx={{
               justifyContent: "center",
               width: "1rem",
@@ -77,7 +77,7 @@ const CartItem = ({
             <RemoveIcon />
           </ListItemButton>
           <ListItemButton
-            onClick={cartItemAddHandler}
+            onClick={onAdd}
             sx={{
               justifyContent: "center",
               width: "1rem",

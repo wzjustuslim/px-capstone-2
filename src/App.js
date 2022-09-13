@@ -13,6 +13,7 @@ import CategoryTagsPage from "./pages/CategoryTagsPage.js";
 import AuthContext from "./contexts/auth-context";
 import CartProvider from "./contexts/CartProvider";
 import AdminPage from "./pages/AdminPage";
+import WalletPage from "./pages/WalletPage";
 
 function App() {
   //#region Declare UI elements
@@ -92,7 +93,7 @@ function App() {
             <Route path='/admin' exact element={<AdminPage />} />
             <Route path='/profile' element={<ProfilePage />} />
             <Route path='/explore' element={<ExplorePage />} />
-            {/* <Route path="/categories/:category" exact element={<CategorySideDrawerPage />} /> */}
+            <Route path='/wallet' element={<WalletPage />} />
             <Route
               path='/categories/:category'
               exact
