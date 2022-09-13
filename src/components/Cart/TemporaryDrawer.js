@@ -37,7 +37,7 @@ export default function TemporaryDrawer({
   const cartCtx = useContext(CartContext);
   const authCtx = useContext(AuthContext);
 
-  const totalAmount = `$${cartCtx.totalAmount.toFixed(0)}`;
+  const totalAmount = `${cartCtx.totalAmount}`;
   const hasItems = cartCtx.items.length > 0;
 
   const handleCloseUserMenu = (setting) => {
@@ -53,34 +53,30 @@ export default function TemporaryDrawer({
         break;
       // if user click outside of drop-down menu, instead of clicking on login/signup
       default:
-        console.log();
+        console.log("Clicked outside of TempDrawer");
         break;
     }
   };
 
-  const cartItemAddHandler = (item) => {
-
-  }
   const cartItemRemoveHandler = (id) => {
+    cartCtx.removeItem(id);
+  };
 
-  }
-
+  const cartItemAddHandler = (item) => {
+    cartCtx.addItem({ ...item, amount: 1 });
+  };
   const list = (anchor) => (
-    <Box
-      sx={{ width: 450 }}
-      role='presentation'
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}>
+    <Box sx={{ width: 450 }} role='presentation'>
       {authCtx.isLoggedIn && (
         <>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography
               variant='subtitle2'
               sx={{ ml: "1rem", fontWeight: 700 }}>
-              Qty
+              Item
             </Typography>
             <Typography sx={{ fontWeight: 700 }} variant='subtitle2'>
-              Item
+              Quantity
             </Typography>
             <Typography
               variant='subtitle2'
@@ -96,45 +92,61 @@ export default function TemporaryDrawer({
                 name={item.name}
                 price={item.price}
                 image={item.image}
-                qty={item.qty}
-                amount={totalAmount}
-                onAdd={cartItemAddHandler.bind(null,item.id)}
-                onRemove={cartItemRemoveHandler(null,item)}
+                amount={item.amount}
+                onAdd={cartItemAddHandler.bind(null, item)}
+                onRemove={cartItemRemoveHandler(null, item.id)}
               />
             ))}
           </List>
-          <Divider />
-          {hasItems && (
-            <Button
-              // component={}
-              to={`#`}
-              variant='contained'
-              size='large'
+          <Box>
+            {!hasItems && (
+              <Typography variant='h3'>Cart has no items.</Typography>
+            )}
+            {hasItems && (
+              <>
+                <Divider />
+                <Typography variant='body1' sx={{ fontWeight: 700 }}>
+                  Total Price:{totalAmount}
+                </Typography>
+              </>
+            )}
+            <Box
               sx={{
-                px: 2,
-                py: 2,
-                borderRadius: 3,
+                mt: "2rem",
                 display: "flex",
-                margin: "0rem 3rem",
+                justifyContent: "space-around",
               }}>
-              Order
-            </Button>
-          )}
-          <Button
-              // component={}
-              to={`#`}
-              variant='contained'
-              size='large'
-              sx={{
-                px: 2,
-                py: 2,
-                borderRadius: 3,
-                display: "flex",
-                alignItems: "flex-end",
-                margin: "0rem 3rem",
-              }}>
-              Close
-            </Button>
+              {hasItems && (
+                <Button
+                  onClick={toggleDrawer(anchor, false)}
+                  variant='contained'
+                  size='large'
+                  sx={{
+                    px: 2,
+                    py: 2,
+                    borderRadius: "2rem",
+                    display: "flex",
+                    padding: "1rem 2rem",
+                  }}>
+                  Order
+                </Button>
+              )}
+              <Button
+                onClick={toggleDrawer(anchor, false)}
+                variant='contained'
+                size='large'
+                sx={{
+                  px: 2,
+                  py: 2,
+                  borderRadius: "2rem",
+                  display: "flex",
+                  alignItems: "flex-end",
+                  padding: "1rem 2rem",
+                }}>
+                Close
+              </Button>
+            </Box>
+          </Box>
         </>
       )}
       {!authCtx.isLoggedIn && (

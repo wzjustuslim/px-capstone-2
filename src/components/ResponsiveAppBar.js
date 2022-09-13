@@ -36,16 +36,17 @@ const ResponsiveAppBar = ({
   handleClickOpen,
   setAuthType,
 }) => {
+  const authCtx = React.useContext(AuthContext);
+  const cartCtx = React.useContext(CartContext);
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [userWalletBalance, setUserWalletBalance] = React.useState(1000);
   // state to check if user is admin 
   const [isAdmin, setIsAdmin] = React.useState(true);
 
-  const authCtx = React.useContext(AuthContext);
-  const cartCtx = React.useContext(CartContext);
   const noOfItemsInCart = cartCtx.items.reduce((curr, item) => {
-    return curr + item.qty;
+    return curr + item.amount;
   }, 0);
 
   const handleOpenNavMenu = (event) => {

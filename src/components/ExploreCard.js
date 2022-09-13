@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useRef, useState, useMemo } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -6,40 +6,47 @@ import CardActionArea from "@mui/material/CardActionArea";
 import CardMedia from "@mui/material/CardMedia";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
+import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 
 import toProper from "../helper/toProper";
 import CartContext from "../contexts/cart-context";
-export default function ExploreCard({ item }) {
-  const { _id, itemImage, itemName, itemPrice } = item;
-  // const qtyItemRef = useRef();
+import AuthContext from "../contexts/auth-context";
+export default function ExploreCard({ _id, itemImage, itemName, itemPrice }) {
+  const qtyItemRef = useRef();
+  const authCtx = useContext(AuthContext);
   const cartCtx = useContext(CartContext);
-  // const [enteredAmountIsValid, setEnteredAmountIsValid] = useState(true);
+  const [enteredAmountIsValid, setEnteredAmountIsValid] = useState(true);
 
-  const addItemToCartHandler = (qty) => {
+  //Tip: amount is qty
+  const addItemToCartHandler = (amount) => {
+    console.log("Adding " + itemName);
     cartCtx.addItem({
       id: _id,
       name: toProper(itemName),
       image: itemImage,
-      qty: qty,
+      amount: amount,
       price: itemPrice,
     });
   };
+  const removeItemFromCartHandler = (_id) => {
+    // cartCtx.removeItem(_id);
+  };
 
-  const addToCartHandler = (e) => {
-    e.preventDefault();
-    // console.log(qtyItemRef);
-    // console.log(qtyItemRef.current.value);
-    // const enteredQty = qtyItemRef.current.value;
-    // const enteredQtyNum = +enteredQty;
+  const CartHandler = (e) => {
+    if (authCtx.isLoggedIn) {
+      e.preventDefault();
+      const enteredQty = qtyItemRef.current.value;
+      const enteredQtyNum = +enteredQty;
 
-    // if (enteredQty.trim().length === 0) {
-    //   setEnteredAmountIsValid(false);
-    //   return;
-    // }
-    // setEnteredAmountIsValid(true);
-    addItemToCartHandler(1);
+      if (enteredQty.trim().length === 0 || enteredQtyNum < 1) {
+        setEnteredAmountIsValid(false);
+        return;
+      }
+      setEnteredAmountIsValid(true);
+      addItemToCartHandler(enteredQtyNum);
+    }
   };
 
   return (
@@ -50,18 +57,22 @@ export default function ExploreCard({ item }) {
         sx={{
           borderRadius: "12px",
         }}>
-        <CardActionArea onClick={addToCartHandler}>
-          <CardContent sx={{ pb: 1 }}>
-            <Box
-              sx={{
-                display: "flex",
-              }}>
-              <img
-                src={itemImage}
-                alt={itemName}
-                className='explore-card-media'
-              />
-            </Box>
+        <CardContent sx={{ pb: 1 }}>
+          <Box
+            sx={{
+              display: "flex",
+            }}>
+            <img
+              src={itemImage}
+              alt={itemName}
+              className='explore-card-media'
+            />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}>
             <Box
               sx={{
                 display: "flex",
@@ -94,45 +105,62 @@ export default function ExploreCard({ item }) {
                 </Typography>
               </Box>
             </Box>
-          </CardContent>
-          {false ? (
-            <CardActions
-              className='explore-card-actions'
-              sx={{
-                bgcolor: "primary.main",
-                display: "flex",
-                justifyContent: "center",
-              }}>
-              <Typography
-                align='center'
-                variant='subtitle2'
-                color='white'
-                sx={{
-                  fontWeight: "700",
-                }}>
-                Add to Cart
+            <TextField
+              inputRef={qtyItemRef}
+              id='outlined-number'
+              label='Qty'
+              type='number'
+              InputLabelProps={{
+                shrink: true,
+              }}
+              defaultValue={1}
+              sx={{ width: "5rem" }}
+            />
+          </Box>
+          <Typography sx={{ fontSize: "9" }}>
+            {!enteredAmountIsValid && (
+              <Typography variant='overline' display='block'>
+                Please enter a valid number.
               </Typography>
-            </CardActions>
-          ) : (
-            <CardActions
-              className='explore-card-actions'
+            )}
+          </Typography>
+        </CardContent>
+        {/* <CardActions
+            className='explore-card-actions'
+            onClick={CartHandler}
+            sx={{
+              bgcolor: "red",
+              display: "flex",
+              justifyContent: "center",
+            }}>
+            <Typography
+              align='center'
+              variant='subtitle2'
+              color='white'
               sx={{
-                bgcolor: "red",
-                display: "flex",
-                justifyContent: "center",
+                fontWeight: "700",
               }}>
-              <Typography
-                align='center'
-                variant='subtitle2'
-                color='white'
-                sx={{
-                  fontWeight: "700",
-                }}>
-                Remove From Cart
-              </Typography>
-            </CardActions>
-          )}
-        </CardActionArea>
+              Remove From Cart
+            </Typography>
+          </CardActions> */}
+        <CardActions
+          className='explore-card-actions'
+          onClick={CartHandler}
+          sx={{
+            bgcolor: "primary.main",
+            display: "flex",
+            justifyContent: "center",
+          }}>
+          <Typography
+            align='center'
+            variant='subtitle2'
+            color='white'
+            sx={{
+              fontWeight: "700",
+            }}>
+            Add to Cart
+          </Typography>
+        </CardActions>
       </Card>
     </Grid>
   );

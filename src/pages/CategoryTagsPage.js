@@ -3,6 +3,8 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 import CatchingPokemonTwoToneIcon from "@mui/icons-material/CatchingPokemonTwoTone";
 import CategoryTagsPageItemSection from "../components/CategoryTagsPageItemSection";
@@ -186,12 +188,16 @@ export default function CategoryTagsPage() {
             }}></Box>
         </section>
         <section>
+        <Container maxWidth='xl'>
+            <Grid container spacing={3} sx={{ pt: "3rem", pb: "3rem" }}>
           {loading && (
             <div className='container'>
               <div className='pokeball'></div>
             </div>
           )}
           {!loading && <CategoryTagsPageItemSection items={categoryItems} />}
+          </Grid>
+          </Container>
         </section>
       </main>
     </>

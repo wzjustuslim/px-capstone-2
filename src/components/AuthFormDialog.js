@@ -103,7 +103,7 @@ export default function AuthFormDialog({
     e.preventDefault();
     setIsUser(true);
     // check sessionStorage if user is already saved as authenticated user
-    if (sessionStorage.getItem("authToken")) {
+    if (sessionStorage.getItem("authToken") && authCtx.isLoggedIn) {
       setIsUser(true);
       handleLoginSucess();
       handleClose();

@@ -10,7 +10,7 @@ import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 
 import ExploreCard from "../components/ExploreCard.js";
-import '../components/loading.css'
+import "../components/loading.css";
 import Banner from "../static/images/explore-banner1.jpg";
 import Pokeball from "../static/images/pokeball-card.jpg";
 
@@ -142,9 +142,9 @@ const ExplorePage = () => {
                 flexWrap: "wrap",
                 pb: "3rem",
               }}>
-              {displayCategories.map((category) => (
+              {displayCategories.map((category, index) => (
                 <Chip
-                  key={category}
+                  key={index}
                   label={category}
                   onClick={() => {
                     handleChip(category);
@@ -159,14 +159,17 @@ const ExplorePage = () => {
           <Container maxWidth='xl'>
             <Grid container spacing={3} sx={{ pb: "3rem" }}>
               {loading ? (
-                <div className="container">
-                  <div className="pokeball" />
+                <div className='container'>
+                  <div className='pokeball' />
                 </div>
               ) : (
                 displayItems.map((item, index) => (
                   <ExploreCard
                     key={index}
-                    item={item}
+                    id={item._id}
+                    itemName={item.itemName}
+                    itemPrice={item.itemPrice}
+                    itemImage={item.itemImage}
                     displayCategories={displayCategories}
                   />
                 ))
