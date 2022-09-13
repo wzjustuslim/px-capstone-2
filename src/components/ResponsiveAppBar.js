@@ -26,6 +26,7 @@ const pages = ["Stats"];
 const guestSettings = ["Log in", "Sign up"];
 const userSettings = ["Profile", "My Items", "Wallet", "Log out"];
 
+
 const ResponsiveAppBar = ({
   setIsUser,
   isUser,
@@ -38,6 +39,8 @@ const ResponsiveAppBar = ({
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [userWalletBalance, setUserWalletBalance] = React.useState(1000);
+  // state to check if user is admin 
+  const [isAdmin, setIsAdmin] = React.useState(true);
 
   const authCtx = React.useContext(AuthContext);
   const cartCtx = React.useContext(CartContext);
@@ -80,6 +83,8 @@ const ResponsiveAppBar = ({
     }
     setAnchorElUser(null);
   };
+
+
 
   return (
     <AppBar position='fixed'>
@@ -184,6 +189,7 @@ const ResponsiveAppBar = ({
               display: { xs: "none", md: "flex" },
             }}>
             {pages.map((page) => (
+              
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
@@ -197,6 +203,23 @@ const ResponsiveAppBar = ({
                 {page}
               </Button>
             ))}
+            {isAdmin 
+             ? <Link key={"admin2"} underline='none' color='inherit' component={RouterLink} to='/admin'>
+                <Button
+                key={"admin"} 
+                onClick={handleCloseNavMenu}
+                sx={{
+                  fontWeight: 600,
+                  mr: 2,
+                  my: 2,
+                  color: "white",
+                  display: "block",
+                }}>
+                TRANSACTION DASHBOARD
+              </Button>
+              </Link>
+             : console.log() 
+            }
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title='Account'>
