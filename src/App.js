@@ -1,5 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
+import axios from "axios";
 import * as React from "react";
 import { Navigate, Routes, Route } from "react-router-dom";
 import ResponsiveAppBar from "./components/ResponsiveAppBar.js";
@@ -53,6 +54,31 @@ function App() {
   //#endregion
 
   React.useEffect(() => {
+    const authToken = JSON.parse(sessionStorage.getItem("authToken"));
+    console.log(authToken);
+    const checkLoggedIn = async () => {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+      try {
+        const url = `${process.env.REACT_APP_BACKEND_URL}/user`;
+        const response = await axios.post(
+          url,
+          {
+            email: authToken.email,
+            username: authToken.username,
+          },
+          config
+        );
+        console.log(`Login response for ${authToken.Username}: `, response);
+      } catch (error) {
+        sessionStorage.removeItem("authToken");
+        console.log("Error: "+ error);
+      }}
+    setIsUser(true);
+    handleLoginSucess();
     authCtx.isLoggedIn ? setIsUser(true) : setIsUser(false);
   }, [isUser, authCtx]);
 
@@ -93,11 +119,7 @@ function App() {
             <Route path='/profile' element={<ProfilePage />} />
             <Route
               path='/explore'
-              element={
-                <ExplorePage
-                  toggleDrawer={toggleDrawer}
-                />
-              }
+              element={<ExplorePage toggleDrawer={toggleDrawer} />}
             />
             {/* <Route path="/categories/:category" exact element={<CategorySideDrawerPage />} /> */}
             <Route
