@@ -94,7 +94,7 @@ export default function TemporaryDrawer({
                 image={item.image}
                 amount={item.amount}
                 onAdd={cartItemAddHandler.bind(null, item)}
-                onRemove={cartItemRemoveHandler(null, item.id)}
+                onRemove={cartItemRemoveHandler.bind(null, item.id)}
               />
             ))}
           </List>
