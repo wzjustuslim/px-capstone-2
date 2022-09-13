@@ -60,7 +60,7 @@ function App() {
     <AuthContext.Provider
       value={{
         isLoggedIn: isLoggedIn,
-        isUseBackend: true
+        isUseBackend: true,
       }}>
       <CartProvider>
         <div className='App'>
@@ -91,7 +91,14 @@ function App() {
             <Route path='/' exact element={<LandingPage />} />
             <Route path='/admin' exact element={<AdminPage />} />
             <Route path='/profile' element={<ProfilePage />} />
-            <Route path='/explore' element={<ExplorePage />} />
+            <Route
+              path='/explore'
+              element={
+                <ExplorePage
+                  toggleDrawer={toggleDrawer}
+                />
+              }
+            />
             {/* <Route path="/categories/:category" exact element={<CategorySideDrawerPage />} /> */}
             <Route
               path='/categories/:category'

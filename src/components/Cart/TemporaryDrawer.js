@@ -37,7 +37,7 @@ export default function TemporaryDrawer({
   const cartCtx = useContext(CartContext);
   const authCtx = useContext(AuthContext);
 
-  const totalAmount = `$${cartCtx.totalAmount.toFixed(0)}`;
+  const totalQty = `${cartCtx.totalQty}`;
   const hasItems = cartCtx.items.length > 0;
 
   const handleCloseUserMenu = (setting) => {
@@ -58,15 +58,13 @@ export default function TemporaryDrawer({
     }
   };
 
-  const cartItemAddHandler = (item) => {};
-  const cartItemRemoveHandler = (id) => {};
+  const addOneHandler = (item) => {
+    cartCtx.addItem(...item, item.totalQty=item.totalQty+1)
+  };
+  const removeOneHandler = (id) => {};
 
   const list = (anchor) => (
-    <Box
-      sx={{ width: 450 }}
-      role='presentation'
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}>
+    <Box sx={{ width: 450 }} role='presentation'>
       {authCtx.isLoggedIn && (
         <>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -81,7 +79,7 @@ export default function TemporaryDrawer({
             <Typography
               variant='subtitle2'
               sx={{ mr: "1rem", fontWeight: 700 }}>
-              Amount
+              Qty
             </Typography>
           </Box>
           <Divider />
@@ -92,19 +90,23 @@ export default function TemporaryDrawer({
                 name={item.name}
                 price={item.price}
                 image={item.image}
-                qty={item.qty}
-                amount={totalAmount}
-                onAdd={cartItemAddHandler.bind(null, item.id)}
-                onRemove={cartItemRemoveHandler(null, item)}
+                totalQty={totalQty}
+                onAddOne={addOneHandler.bind(null, item)}
+                onRemoveOne={removeOneHandler(null, item.id)}
               />
             ))}
           </List>
           <Divider />
-          <Box sx={{ mt:"2rem", display: "flex", justifyContent:"space-around" }}>
+          <Typography component={"iuasfunaeifbna"} />
+          <Box
+            sx={{
+              mt: "2rem",
+              display: "flex",
+              justifyContent: "space-around",
+            }}>
             {hasItems && (
               <Button
-                // component={}
-                to={`#`}
+                onClick={toggleDrawer(anchor, false)}
                 variant='contained'
                 size='large'
                 sx={{
@@ -118,8 +120,7 @@ export default function TemporaryDrawer({
               </Button>
             )}
             <Button
-              // component={}
-              to={`#`}
+                onClick={toggleDrawer(anchor, false)}
               variant='contained'
               size='large'
               sx={{
