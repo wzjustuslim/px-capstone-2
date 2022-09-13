@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useCallback } from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -20,9 +20,9 @@ export default function ExploreCard({ toggleDrawer, item }) {
 
   // const [enteredAmountIsValid, setEnteredAmountIsValid] = useState(true);
 
-  const cartHandler = (e) => {
+
+  const cartHandler = useCallback((e) => {
     if (authCtx.isLoggedIn) {
-      e.preventDefault();
       if (isInCart) {
         // cartCtx.removeItem(_id);
         setIsInCart(false);
@@ -37,9 +37,10 @@ export default function ExploreCard({ toggleDrawer, item }) {
         setIsInCart(true);
       }
     } else {
+      //TODO: toggle cart side drawer 
       toggleDrawer("right", true);
     }
-  };
+  })
 
   return (
     <Grid xs={6} sm={4} md={3} lg={2}>
