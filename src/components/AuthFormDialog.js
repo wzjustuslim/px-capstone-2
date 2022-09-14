@@ -74,18 +74,23 @@ export default function AuthFormDialog({
       const newUser = {
         email: newEmail,
         role: "user",
-        token: data.token
+        token: data.token,
       };
       console.log(authCtx.isUseBackend);
       if (authCtx.isUseBackend && data.success) {
+        console.log(data.token);
+        const newUser = {
+          username: newUsername,
+          role: "user",
+          token: data.token,
+        };
         // using JWT token
-        sessionStorage.setItem("authToken", newUser);
+        sessionStorage.setItem("authToken", JSON.stringify(newUser));
         console.log(
           "Successfully created account! Response from backend:",
-          data
+          data.token
         );
       } else {
-        
         sessionStorage.setItem("authToken", JSON.stringify(newUser));
       }
       setIsUser(true);
@@ -136,7 +141,7 @@ export default function AuthFormDialog({
           // email: enteredEmail,
           username: enteredUsername,
           role: "user",
-          token: data.token
+          token: data.token,
         };
         sessionStorage.setItem("authToken", JSON.stringify(loginUser));
         // sessionStorage.setItem("authToken", JSON.stringify(loginUser));
